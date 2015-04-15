@@ -1,8 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Standard Assets\Image Effects (Pro Only)\ContrastEnhance.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Container Barrel\Editor\Image Effects\CameraMotionBlurEditor.js">
     <Files>
-      <File FileName="Assets\Standard Assets\Image Effects (Pro Only)\ContrastEnhance.js" Line="8" Column="1" />
+      <File FileName="Assets\Container Barrel\Editor\Image Effects\CameraMotionBlurEditor.js" Line="65" Column="76" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
