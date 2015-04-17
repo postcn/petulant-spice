@@ -1,12 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CameraFollow.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Character\FreeCharacter\Movement.cs">
     <Files>
-      <File FileName="..\..\..\..\..\..\Public\Documents\Unity Projects\OmegaMage\Assets\__Scripts\Tile.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\..\..\..\Public\Documents\Unity Projects\OmegaMage\Assets\__Scripts\LayoutTiles.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\..\..\..\Public\Documents\Unity Projects\OmegaMage\Assets\__Scripts\Mage.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\..\..\..\Public\Documents\Unity Projects\OmegaMage\Assets\__Scripts\CameraFollow.cs" Line="24" Column="2" />
-      <File FileName="Assets\CameraFollow.cs" Line="23" Column="12" />
+      <File FileName="Assets\Character\FreeCharacter\Movement.cs" Line="77" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

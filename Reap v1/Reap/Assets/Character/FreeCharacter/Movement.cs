@@ -27,21 +27,23 @@ public class Movement : MonoBehaviour {
 	}
 
 	void UpdatePosition() {
-		Vector3 newPosition = this.transform.position;
-
+		Vector3 delta = Vector3.zero;
+		
 		if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey("w")) {
-			newPosition.z += speed;
+			delta.z += 1;
 		}
 		if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey("s")) {
-			newPosition.z -= speed;
+			delta.z -= 1;
 		}
 		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey("a")) {
-			newPosition.x -= speed;
+			delta.x -= 1;
 		}
 		if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey("d")) {
-			newPosition.x += speed;
+			delta.x += 1;
 		}
-		this.transform.position = newPosition;
+		delta.Normalize();
+		delta *= speed;
+		this.transform.position += delta;
 	}
 
 	void GenerateSight() {
