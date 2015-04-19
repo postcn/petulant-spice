@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Character\FreeCharacter\Movement.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Monster\scripts\monstercontroller.js">
     <Files>
-      <File FileName="Assets\Character\FreeCharacter\Movement.cs" Line="77" Column="1" />
+      <File FileName="Assets\Character\FreeCharacter\Movement.cs" Line="45" Column="18" />
+      <File FileName="Assets\Monster\scripts\monstercontroller.js" Line="22" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

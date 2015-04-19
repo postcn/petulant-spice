@@ -122,7 +122,7 @@ function FixedUpdate()
 		
 		var targetVelocity = targetDirection;
 		
-		
+		/* Commented out because we don't want input on the monster for our game.
 		if (Input.GetButton("Fire2") && canrun && !isjumping)
 		{
 			targetVelocity *= runspeed;
@@ -154,7 +154,7 @@ function FixedUpdate()
 		else
 		{
 			animator.SetBool("attack",false);
-		}
+		} */
 		
 		
 		
@@ -167,7 +167,7 @@ function FixedUpdate()
 		
 		animator.SetFloat("speed",velocityanim,dampTime, 0.2);
 		
-		if (Input.GetButton("Jump") && Time.time > nextjump)
+		/*if (Input.GetButton("Jump") && Time.time > nextjump)
 		{
 			nextjump = Time.time + jumpinterval;
 			isjumping = true;
@@ -183,13 +183,13 @@ function FixedUpdate()
         	 animator.SetBool("jump",false);
         	 isjumping = false;
          	
-     	}   
+     	}*/   
 	}
  
-	 if (Input.GetButton("Fire3"))
+	 /*if (Input.GetButton("Fire3"))
 	 {
 	 	 weaponselect();	
-	 }
+	 }*/
       
 	 animator.SetBool("grounded",grounded);	 
      
