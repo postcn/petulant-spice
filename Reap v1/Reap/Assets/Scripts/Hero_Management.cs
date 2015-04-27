@@ -4,12 +4,14 @@ using System.Collections;
 public class Hero_Management : Character {
 
     public static int BLOODLUST_INTERVAL = 1;
+    public static int BREATHING_THRESHOLD = 50;
+    public static int MAX_BLOODLUST = 100;
 
     private int bloodlustCount = 0;
-    private float volumeStep = 0.02f;
-    private float LIGHT_STEP = 5.0f/100.0f;
-    private float LIGHT_RANGE_STEP = 40.0f/100.0f;
-    private float COLOR_STEP = 0.01f;
+    private static float volumeStep = 2.0f/MAX_BLOODLUST;
+    private static float LIGHT_STEP = 5.0f/MAX_BLOODLUST;
+    private static float LIGHT_RANGE_STEP = 40.0f/MAX_BLOODLUST;
+    private static float COLOR_STEP = 0.01f;
 
 
 	// Use this for initialization
@@ -25,8 +27,16 @@ public class Hero_Management : Character {
     private void increaseBloodlust() {
         bloodlustCount++;
 
-        AudioSource source = this.GetComponent<AudioSource>();
-        source.volume = source.volume + volumeStep;
+        AudioSource[] sources = this.GetComponents<AudioSource>();
+        foreach (AudioSource source in sources) {
+            source.volume = source.volume + volumeStep;
+        }
+
+        if (bloodlustCount == BREATHING_THRESHOLD) {
+            sources[1].Play(); //play the breathing at greater than 50.
+            sources[1].volume = 0.0f;
+        }
+
 
         Light light = Camera.main.GetComponentInChildren<Light>();
         light.intensity = light.intensity + LIGHT_STEP;
