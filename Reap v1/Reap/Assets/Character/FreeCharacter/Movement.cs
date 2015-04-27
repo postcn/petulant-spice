@@ -21,32 +21,35 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Rotate(Vector3	mousePoint) {
-		this.transform.LookAt (mousePoint);
+		this.transform.LookAt(mousePoint);
 	}
 	
 	void UpdatePosition() {
 		Vector3 delta = Vector3.zero;
 		
-		if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey("w")) {
+		if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey("w")) {
 			delta.z += 1;
 		}
-		if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey("s")) {
+		if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey("s")) {
 			delta.z -= 1;
 		}
-		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey("a")) {
+		if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey("a")) {
 			delta.x -= 1;
 		}
-		if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey("d")) {
+		if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey("d")) {
 			delta.x += 1;
 		}
 		delta.Normalize();
 		delta *= speed;
+		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl)) {
+			delta *= 2;
+		}
 		this.transform.position += delta;
 	}
 	
 	void GenerateSight(Vector3 mousePoint) {
-		line.SetPosition (0, this.transform.position);
-		line.SetPosition (1, mousePoint);
+		line.SetPosition(0, this.transform.position);
+		line.SetPosition(1, mousePoint);
 	}
 	
 	Vector3 GetMousePoint() {
