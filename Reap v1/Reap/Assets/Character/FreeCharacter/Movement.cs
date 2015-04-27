@@ -2,33 +2,28 @@
 using System.Collections;
 
 public class Movement : MonoBehaviour {
-
-	private KeyCode secretSprint = KeyCode.Tab;
-
+	
 	LineRenderer line;
-	private float speed = 0.1f;
-	private static float SPEED_MULTIPLIER = 2;
-	private float angle = 0.0f;
-
+	private float speed = 0.06f;
+	
 	void Start() {
 		line = gameObject.GetComponent<LineRenderer>();
 		line.enabled = true;
 		line.SetVertexCount(2);
 		line.useWorldSpace = true;
 	}
-
-	// Update is called once per frame
+	
 	void Update () {
-		Rotate();
+		var mousePoint = GetMousePoint();
+		Rotate(mousePoint);
 		UpdatePosition();
-		GenerateSight();
+		GenerateSight(mousePoint);
 	}
 	
-	void Rotate() {
-		GetMouseAngle();
-		this.transform.eulerAngles = new Vector3(0, this.angle, 0);
+	void Rotate(Vector3	mousePoint) {
+		this.transform.LookAt (mousePoint);
 	}
-
+	
 	void UpdatePosition() {
 		Vector3 delta = Vector3.zero;
 		
@@ -46,35 +41,23 @@ public class Movement : MonoBehaviour {
 		}
 		delta.Normalize();
 		delta *= speed;
-		if (Input.GetKey (secretSprint)) {
-			delta *= SPEED_MULTIPLIER;
-		}
 		this.transform.position += delta;
 	}
-
-	void GenerateSight() {
+	
+	void GenerateSight(Vector3 mousePoint) {
 		line.SetPosition (0, this.transform.position);
-		var v3 = Input.mousePosition;
-		v3.z = Camera.main.nearClipPlane;
-		v3 = Camera.main.ScreenToWorldPoint(v3);
-		line.SetPosition (1, v3);
+		line.SetPosition (1, mousePoint);
 	}
-
-	void GetMouseAngle() {
-		Vector3 characterPosition = Camera.main.WorldToScreenPoint(this.transform.position);
-		Vector3 mouse = Input.mousePosition;
-
-
-		Vector3 translated = Vector3.zero;
-		translated.x = mouse.x - characterPosition.x;
-		translated.y = mouse.y - characterPosition.y;
-
-		this.angle = Vector3.Dot(Vector3.up, translated);
-		this.angle /= (Vector3.up.magnitude * translated.magnitude);
-		this.angle = Mathf.Acos(this.angle);
-		this.angle = this.angle * 180 / Mathf.PI;
-		if (mouse.x <= characterPosition.x) {
-			this.angle = 360 - this.angle;
+	
+	Vector3 GetMousePoint() {
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Plane characterPlane = new Plane (this.transform.up, this.transform.position);
+		float distance = 0; 
+		if (characterPlane.Raycast(ray, out distance)) { //This should always occur, because the plane runs parallel through the character
+			var mousePoint = ray.GetPoint(distance); //This point is always *really* close to the plane
+			mousePoint.y = this.transform.position.y; //But we can ensure that it lies on the plane so we don't cause any weird rotations in Rotate(mousePoint)
+			return mousePoint;
 		}
+		return this.transform.position;
 	}
 }
