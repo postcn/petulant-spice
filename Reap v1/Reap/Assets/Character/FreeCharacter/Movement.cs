@@ -3,8 +3,11 @@ using System.Collections;
 
 public class Movement : MonoBehaviour {
 
+	private KeyCode secretSprint = KeyCode.Tab;
+
 	LineRenderer line;
-	private float speed = 0.06f;
+	private float speed = 0.1f;
+	private static float SPEED_MULTIPLIER = 2;
 	private float angle = 0.0f;
 
 	void Start() {
@@ -43,6 +46,9 @@ public class Movement : MonoBehaviour {
 		}
 		delta.Normalize();
 		delta *= speed;
+		if (Input.GetKey (secretSprint)) {
+			delta *= SPEED_MULTIPLIER;
+		}
 		this.transform.position += delta;
 	}
 
@@ -52,8 +58,6 @@ public class Movement : MonoBehaviour {
 		v3.z = Camera.main.nearClipPlane;
 		v3 = Camera.main.ScreenToWorldPoint(v3);
 		line.SetPosition (1, v3);
-		Debug.Log ("Character: " + this.transform.position);
-		Debug.Log("Mouse: " + v3);
 	}
 
 	void GetMouseAngle() {
