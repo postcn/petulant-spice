@@ -24,6 +24,9 @@ public class CameraFollow : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+        if (targetTransform == null) {
+            return;
+        }
 		Vector3 pos = targetTransform.position+followOffset;
 		transform.position = Vector3.Lerp (transform.position, pos, camEasing);
 	}

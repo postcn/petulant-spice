@@ -1,11 +1,11 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{F8E8B07D-4968-95D3-7368-FC555FCD692C}"
+# Visual Studio 2008
+
+Project("{B31226C7-A2CA-2B75-CF14-DB572354610B}") = "Reap", "Assembly-CSharp.csproj", "{F8E8B07D-4968-95D3-7368-FC555FCD692C}"
 EndProject
-Project("{b955b5aa-9c1c-4cd6-9a10-9e34431be3eb}") = "Assembly-UnityScript", "Assembly-UnityScript.unityproj", "{F99194B3-D421-D8D4-6EC2-0242A0EC24CF}"
+Project("{B31226C7-A2CA-2B75-CF14-DB572354610B}") = "Reap", "Assembly-UnityScript.unityproj", "{F99194B3-D421-D8D4-6EC2-0242A0EC24CF}"
 EndProject
-Project("{b955b5aa-9c1c-4cd6-9a10-9e34431be3eb}") = "Assembly-UnityScript-Editor", "Assembly-UnityScript-Editor.unityproj", "{E1B326EB-4531-E95A-853E-46F1155788E0}"
+Project("{B31226C7-A2CA-2B75-CF14-DB572354610B}") = "Reap", "Assembly-UnityScript-Editor.unityproj", "{E1B326EB-4531-E95A-853E-46F1155788E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E1B326EB-4531-E95A-853E-46F1155788E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1B326EB-4531-E95A-853E-46F1155788E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1B326EB-4531-E95A-853E-46F1155788E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1B326EB-4531-E95A-853E-46F1155788E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F8E8B07D-4968-95D3-7368-FC555FCD692C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8E8B07D-4968-95D3-7368-FC555FCD692C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8E8B07D-4968-95D3-7368-FC555FCD692C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -25,8 +21,15 @@ Global
 		{F99194B3-D421-D8D4-6EC2-0242A0EC24CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F99194B3-D421-D8D4-6EC2-0242A0EC24CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F99194B3-D421-D8D4-6EC2-0242A0EC24CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1B326EB-4531-E95A-853E-46F1155788E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1B326EB-4531-E95A-853E-46F1155788E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1B326EB-4531-E95A-853E-46F1155788E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1B326EB-4531-E95A-853E-46F1155788E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+												GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
@@ -63,7 +66,5 @@ Global
 		$4.DirectoryNamespaceAssociation = None
 		$4.ResourceNamePolicy = FileFormatDefault
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
+
 EndGlobal
