@@ -24,7 +24,7 @@ public class CameraFollow : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-        if (targetTransform == null) {
+        if (targetTransform == null || targetTransform.position.y < Constants.MOVEMENT_FLOOR) {
             return;
         }
 		Vector3 pos = targetTransform.position+followOffset;

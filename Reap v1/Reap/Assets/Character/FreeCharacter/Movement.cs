@@ -27,6 +27,9 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void UpdatePosition() {
+        if (this.transform.position.y < Constants.MOVEMENT_FLOOR) {
+            return;
+        }
 		Vector3 delta = Vector3.zero;
 		
 		if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey("w")) {

@@ -80,18 +80,26 @@ public class Hero_Management : Character {
         return bloodlustCount > MAX_BLOODLUST;
     }
 
+    public void heal(int amount) {
+        this.health = Mathf.Min(this.health+amount, MAX_HERO_HEALTH);
+    }
+
+    public void resupply(int ammo) {
+        //TODO: Implement the reloading and resupplying mechanics.
+    }
+
     IEnumerator Bloodlust() {
         yield return new WaitForSeconds(BLOODLUST_INTERVAL);
         increaseBloodlust();
         if (killedByBloodlust()) {
-            kill();
+            kill(Constants.DEATH_REASONS.Bloodlust);
         }
         else {
             StartCoroutine(Bloodlust());
         }
     }
 
-    protected override void kill() {
+    protected override void kill(Constants.DEATH_REASONS reason) {
         if (dying) {
             return;
         }
@@ -99,6 +107,6 @@ public class Hero_Management : Character {
         Debug.Log("Called Kill in Hero.");
         AudioSource[] sources = this.GetComponents<AudioSource>();
         sources[2].Play();
-        StartCoroutine(Constants.Wait(HERO_DEATH_DELAY, base.kill));
+        StartCoroutine(Constants.Wait(HERO_DEATH_DELAY, base.kill, reason));
     }
 }

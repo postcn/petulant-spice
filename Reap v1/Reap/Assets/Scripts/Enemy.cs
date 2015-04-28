@@ -11,7 +11,7 @@ public class Enemy : Character {
     //TODO: Remove when testing i
     IEnumerator Bloodlust() {
         yield return new WaitForSeconds(Random.Range(85, 100));
-        kill();
+        kill(Constants.DEATH_REASONS.Fighting);
     }
 
 }
