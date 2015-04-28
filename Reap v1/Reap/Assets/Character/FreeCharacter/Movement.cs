@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class Movement : MonoBehaviour {
+
+    private const float FUDGE_FACTOR = 0.05f;
 	
 	LineRenderer line;
 	private float speed = 0.06f;
@@ -48,7 +50,10 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void GenerateSight(Vector3 mousePoint) {
-		line.SetPosition(0, this.transform.position);
+        var linePos = this.transform.position;
+        linePos.y += FUDGE_FACTOR;
+        mousePoint.y += FUDGE_FACTOR;
+		line.SetPosition(0, linePos);
 		line.SetPosition(1, mousePoint);
 	}
 	

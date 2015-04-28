@@ -2,26 +2,31 @@
 using System.Collections;
 
 public class Hero_Management : Character {
+    public static Hero_Management self;
 
-    public static int BLOODLUST_INTERVAL = 1;
-    public static int BREATHING_THRESHOLD = 50;
-    public static int MAX_BLOODLUST = 100;
+    public const int HERO_DEATH_DELAY = 1;
+    public const int HEARTBEAT_THRESHOLD = 25;
+    public const int BLOODLUST_INTERVAL = 1;
+    public const int BREATHING_THRESHOLD = 75;
+    public const int MAX_BLOODLUST = 100;
+    public const int KILL_DECREASE = 10;
+    public const int MAX_HERO_HEALTH = 100;
+
+
+    private const float VOLUME_STEP = 2.0f/MAX_BLOODLUST;
+    private const float LIGHT_STEP = 5.0f/MAX_BLOODLUST;
+    private const float LIGHT_RANGE_STEP = 40.0f/MAX_BLOODLUST;
+    private const float COLOR_STEP = 1.0f/MAX_BLOODLUST;
 
     private int bloodlustCount = 0;
-    private static float volumeStep = 2.0f/MAX_BLOODLUST;
-    private static float LIGHT_STEP = 5.0f/MAX_BLOODLUST;
-    private static float LIGHT_RANGE_STEP = 40.0f/MAX_BLOODLUST;
-    private static float COLOR_STEP = 0.01f;
+    private bool dying = false;
 
 
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
+        self = this;
         StartCoroutine(Bloodlust());
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+        this.health = MAX_HERO_HEALTH;
 	}
 
     private void increaseBloodlust() {
@@ -29,27 +34,50 @@ public class Hero_Management : Character {
 
         AudioSource[] sources = this.GetComponents<AudioSource>();
         foreach (AudioSource source in sources) {
-            source.volume = source.volume + volumeStep;
+            source.volume = source.volume + VOLUME_STEP;
         }
 
+        if (bloodlustCount == HEARTBEAT_THRESHOLD) {
+            sources[0].Play(); //play the breathing at greater than 50.
+            sources[0].volume = 1.0f - (MAX_BLOODLUST - HEARTBEAT_THRESHOLD) * VOLUME_STEP;
+        }
         if (bloodlustCount == BREATHING_THRESHOLD) {
             sources[1].Play(); //play the breathing at greater than 50.
-            sources[1].volume = 0.0f;
+            sources[1].volume = 1.0f - (MAX_BLOODLUST - BREATHING_THRESHOLD) * VOLUME_STEP;
+        }
+        changeLight(1);
+    }
+
+    public void decrementBloodlust() {
+        bloodlustCount -= KILL_DECREASE;
+        
+        AudioSource[] sources = this.GetComponents<AudioSource>();
+        sources[0].volume = (bloodlustCount - HEARTBEAT_THRESHOLD) * VOLUME_STEP;
+        sources[1].volume = (bloodlustCount - BREATHING_THRESHOLD) * VOLUME_STEP;
+        
+        if (bloodlustCount < HEARTBEAT_THRESHOLD) {
+            sources[0].Stop();
+        }
+        if (bloodlustCount < BREATHING_THRESHOLD) {
+            sources[1].Stop();
         }
 
+        changeLight(-1*KILL_DECREASE);
 
+    }
+
+    private void changeLight(int scale) {
         Light light = Camera.main.GetComponentInChildren<Light>();
-        light.intensity = light.intensity + LIGHT_STEP;
         Color newColor = light.color;
-        newColor.g -= COLOR_STEP;
-        newColor.b -= COLOR_STEP;
-        light.color = newColor;
-
-        light.spotAngle += LIGHT_RANGE_STEP;
+        newColor.g -= COLOR_STEP * scale;
+        newColor.b -= COLOR_STEP * scale;
+        light.intensity += LIGHT_STEP*scale;
+        light.spotAngle += LIGHT_RANGE_STEP*scale;
+        light.color = newColor; 
     }
 
     private bool killedByBloodlust() {
-        return bloodlustCount > 100;
+        return bloodlustCount > MAX_BLOODLUST;
     }
 
     IEnumerator Bloodlust() {
@@ -58,6 +86,19 @@ public class Hero_Management : Character {
         if (killedByBloodlust()) {
             kill();
         }
-        StartCoroutine(Bloodlust());
+        else {
+            StartCoroutine(Bloodlust());
+        }
+    }
+
+    protected override void kill() {
+        if (dying) {
+            return;
+        }
+        dying = true;
+        Debug.Log("Called Kill in Hero.");
+        AudioSource[] sources = this.GetComponents<AudioSource>();
+        sources[2].Play();
+        StartCoroutine(Constants.Wait(HERO_DEATH_DELAY, base.kill));
     }
 }

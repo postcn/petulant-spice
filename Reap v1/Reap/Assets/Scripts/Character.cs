@@ -4,7 +4,7 @@ using System.Collections;
 public class Character : MonoBehaviour {
 
     public GameObject body;
-    private int health;
+    protected int health;
 
     public Character() {}
 
@@ -14,17 +14,29 @@ public class Character : MonoBehaviour {
     }
 
 	// Use this for initialization
-	void Start () {
+	protected virtual void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	protected virtual void Update () {
+	    if (this.transform.position.y < Constants.MAP_FLOOR) {
+            kill();
+        }
 	}
 
-    protected void kill() {
+    protected virtual void kill() {
         Debug.Log("Should be killed");
+
+        if (this is Hero_Management) {
+            Debug.Log("Hero ded. Game Over.");
+            //TODO: Implement Game over.
+        }
+        //TODO: Monster -> heal the hero's bloodlust by amount.
+        else if (this is Enemy) {
+            //TODO: Enemies have different amounts?
+            Hero_Management.self.decrementBloodlust();
+        }
         Destroy(body);
     }
 }

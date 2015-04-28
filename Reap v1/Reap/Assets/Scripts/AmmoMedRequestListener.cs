@@ -46,14 +46,12 @@ public class AmmoMedRequestListener : MonoBehaviour {
 	}
 
 	public void register(AmmoMedSpawnerScript script) {
-		scripts.Add (script);
-		Debug.Log (scripts.Count);
+		scripts.Add(script);
 	} 
 
 	private void spawnMedPack() {
 		System.Random rnd = new System.Random();
 		int r = rnd.Next(scripts.Count);
-		Debug.Log (r);
 		scripts[r].spawnMed();
 	}
 
