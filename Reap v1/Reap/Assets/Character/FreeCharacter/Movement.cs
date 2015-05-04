@@ -35,6 +35,11 @@ public class Movement : MonoBehaviour {
 		}
 		delta.Normalize();
 		delta *= speed;
+        //Make the hero slower based upon
+        if (Hero_Management.self != null && Hero_Management.self.getBloodlustCount() > Hero_Management.BREATHING_THRESHOLD) {
+            float lust = (float) Hero_Management.self.getBloodlustCount();
+            delta *= (1.0f -  (lust - Hero_Management.BREATHING_THRESHOLD) / Hero_Management.MAX_BLOODLUST);
+        }
 		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl)) {
 			delta *= 2;
 		}

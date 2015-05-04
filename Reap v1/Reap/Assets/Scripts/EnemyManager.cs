@@ -18,7 +18,7 @@ public class EnemyManager : MonoBehaviour
 	void Spawn ()
 	{
 		// If the player has no health left...
-		if(numSpawned >= 3)
+		if(numSpawned >= 10)
 		{
 			// ... exit the function.
 			return;

@@ -2,24 +2,29 @@
 using System.Collections;
 
 public class Enemy : Character {
+    Transform player;               // Reference to the player's position.
+    NavMeshAgent nav;               // Reference to the nav mesh agent.
 
 	// Use this for initialization
 	protected override void Start () {
         this.gameObject.tag = "Enemy";
-        StartCoroutine(Bloodlust());
+        player = GameObject.FindGameObjectWithTag ("Hero").transform;
+        nav = GetComponent <NavMeshAgent> ();
 	}
 
-    //TODO: Remove when testing i
-    IEnumerator Bloodlust() {
-        yield return new WaitForSeconds(Random.Range(85, 100));
-        kill(Constants.DEATH_REASONS.Fighting);
+    protected override void Update()
+    {
+        base.Update();
+        if (player != null) {
+            //Null check because player is null in Game Over situation.
+            nav.SetDestination (player.position);
+        } 
     }
 
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Destroy(this.gameObject); //For testing, just kill the enemy
-            Debug.Log("Killed Enemy");
+            this.kill(Constants.DEATH_REASONS.Fighting); //For testing, just kill the enemy
         }
     }
 }

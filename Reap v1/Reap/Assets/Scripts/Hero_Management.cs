@@ -9,6 +9,7 @@ public class Hero_Management : Character {
     public const int BLOODLUST_INTERVAL = 1;
     public const int BREATHING_THRESHOLD = 75;
     public const int MAX_BLOODLUST = 100;
+    public const int MIN_BLOODLUST = 0;
     public const int KILL_DECREASE = 10;
     public const int MAX_HERO_HEALTH = 100;
 
@@ -22,6 +23,9 @@ public class Hero_Management : Character {
     private bool dying = false;
     public Constants.WEAPONS weapon {get; set;}
 
+    public int getBloodlustCount() {
+        return bloodlustCount;
+    }
 
 	// Use this for initialization
 	protected override void Start () {
@@ -51,6 +55,9 @@ public class Hero_Management : Character {
     }
 
     public void decrementBloodlust() {
+        if (bloodlustCount <= MIN_BLOODLUST) {
+            return;
+        }
         bloodlustCount -= KILL_DECREASE;
         
         AudioSource[] sources = this.GetComponents<AudioSource>();

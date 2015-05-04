@@ -48,7 +48,6 @@ public class Bullet : MonoBehaviour {
         if (tag == "Map" || tag == "Hero" || tag == "Untagged") {
             return;
         }
-        Destroy(collision.gameObject); //TODO: Handle collisions in individual objects. Use for testing
         Destroy(this.gameObject);
     }
 }
