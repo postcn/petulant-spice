@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Hero_Management : Character {
@@ -20,6 +20,7 @@ public class Hero_Management : Character {
 
     private int bloodlustCount = 0;
     private bool dying = false;
+    public Constants.WEAPONS weapon {get; set;}
 
 
 	// Use this for initialization
@@ -27,6 +28,7 @@ public class Hero_Management : Character {
         self = this;
         StartCoroutine(Bloodlust());
         this.health = MAX_HERO_HEALTH;
+        this.weapon = Constants.WEAPONS.Pistol;
 	}
 
     private void increaseBloodlust() {

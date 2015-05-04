@@ -46,8 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Bullet.cs" />
+     <Compile Include="Assets\Character\FreeCharacter\Fire.cs" />
+     <Compile Include="Assets\Character\FreeCharacter\GenerateSight.cs" />
      <Compile Include="Assets\Character\FreeCharacter\LevelSelect.cs" />
      <Compile Include="Assets\Character\FreeCharacter\Movement.cs" />
+     <Compile Include="Assets\Character\FreeCharacter\UpdateCharacter.cs" />
      <Compile Include="Assets\Container Barrel\Standard Assets\Image Effects (Pro Only)\BlurEffect.cs" />
      <Compile Include="Assets\Container Barrel\Standard Assets\Image Effects (Pro Only)\ColorCorrectionEffect.cs" />
      <Compile Include="Assets\Container Barrel\Standard Assets\Image Effects (Pro Only)\ContrastStretchEffect.cs" />

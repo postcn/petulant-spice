@@ -28,7 +28,10 @@ public class EnemyManager : MonoBehaviour
 		int spawnEnemyIndex = Random.Range (0, spawnEnemies.Length);
 		
 		// Create an instance of the enemy prefab at the randomly selected spawn point's position and rotation.
-		Instantiate (spawnEnemies[spawnEnemyIndex], spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+        GameObject enemy = Instantiate(spawnEnemies [spawnEnemyIndex]);
+        enemy.transform.position = spawnPoints[spawnPointIndex].position;
+        enemy.transform.rotation = spawnPoints[spawnPointIndex].rotation;
+        enemy.tag = Constants.ENEMY_TAG;
 
 		numSpawned++;
 	}

@@ -4,30 +4,19 @@ using System.Collections;
 public class Movement : MonoBehaviour {
 
     private const float FUDGE_FACTOR = 0.05f;
+	private static float speed = 0.06f;
 	
-	LineRenderer line;
-	private float speed = 0.06f;
-	
-	void Start() {
-		line = gameObject.GetComponent<LineRenderer>();
-		line.enabled = true;
-		line.SetVertexCount(2);
-		line.useWorldSpace = true;
+    public static void Move(Transform hero, Vector3 mousePoint) {
+        Rotate(hero, mousePoint);
+        UpdatePosition(hero);
+    }
+
+	private static void Rotate(Transform hero, Vector3	mousePoint) {
+		hero.LookAt(mousePoint);
 	}
 	
-	void Update () {
-		var mousePoint = GetMousePoint();
-		Rotate(mousePoint);
-		UpdatePosition();
-		GenerateSight(mousePoint);
-	}
-	
-	void Rotate(Vector3	mousePoint) {
-		this.transform.LookAt(mousePoint);
-	}
-	
-	void UpdatePosition() {
-        if (this.transform.position.y < Constants.MOVEMENT_FLOOR) {
+	private static void UpdatePosition(Transform hero) {
+        if (hero.position.y < Constants.MOVEMENT_FLOOR) {
             return;
         }
 		Vector3 delta = Vector3.zero;
@@ -49,26 +38,6 @@ public class Movement : MonoBehaviour {
 		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl)) {
 			delta *= 2;
 		}
-		this.transform.position += delta;
-	}
-	
-	void GenerateSight(Vector3 mousePoint) {
-        var linePos = this.transform.position;
-        linePos.y += FUDGE_FACTOR;
-        mousePoint.y += FUDGE_FACTOR;
-		line.SetPosition(0, linePos);
-		line.SetPosition(1, mousePoint);
-	}
-	
-	Vector3 GetMousePoint() {
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		Plane characterPlane = new Plane (this.transform.up, this.transform.position);
-		float distance = 0; 
-		if (characterPlane.Raycast(ray, out distance)) { //This should always occur, because the plane runs parallel through the character
-			var mousePoint = ray.GetPoint(distance); //This point is always *really* close to the plane
-			mousePoint.y = this.transform.position.y; //But we can ensure that it lies on the plane so we don't cause any weird rotations in Rotate(mousePoint)
-			return mousePoint;
-		}
-		return this.transform.position;
+		hero.position += delta;
 	}
 }
