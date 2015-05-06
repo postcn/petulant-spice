@@ -17,12 +17,11 @@ public class EnemyManager : MonoBehaviour
 	
 	void Spawn ()
 	{
-		// If the player has no health left...
-		if(numSpawned >= 10)
-		{
-			// ... exit the function.
-			return;
-		}
+		// If the player has no health left..
+        if (Hero_Management.self == null) {
+            //Hero is dead.
+            return;
+        }
 
 		int spawnPointIndex = Random.Range (0, spawnPoints.Length);
 		int spawnEnemyIndex = Random.Range (0, spawnEnemies.Length);

@@ -10,10 +10,13 @@ public class MedPack : MonoBehaviour {
 
     private bool healing = false;
     private AudioSource heal_audio;
+    private Light halo;
+    private float step = -0.01f;
 
 	// Use this for initialization
 	void Start () {
         heal_audio = thisMedpack.GetComponent<AudioSource>();
+        halo = this.thisMedpack.GetComponent<Light>();
 	}
 
     void OnCollisionEnter(Collision collision) {
@@ -33,7 +36,12 @@ public class MedPack : MonoBehaviour {
             Destroy(thisMedpack);
             GameObject o = Instantiate(replacementObject);
             o.transform.position = Hero_Management.self.transform.position;
-        }  
+        }
+
+        halo.intensity += step;
+        if (halo.intensity <= 0 || halo.intensity >= 1) {
+            step *= -1;
+        }
 	}
    
 }

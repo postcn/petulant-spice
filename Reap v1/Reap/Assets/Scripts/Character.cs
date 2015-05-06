@@ -38,6 +38,7 @@ public class Character : MonoBehaviour {
             //TODO: Enemies have different amounts?
             if (Hero_Management.self != null) {
                 Hero_Management.self.decrementBloodlust();
+                Hero_Management.self.addSamples(this.getSampleCount());
             }
 
         }
@@ -46,5 +47,9 @@ public class Character : MonoBehaviour {
             fireDeathReplacement.transform.position = body.transform.position;
         }
         Destroy(body);
+    }
+
+    protected virtual int getSampleCount() {
+        return 0;
     }
 }

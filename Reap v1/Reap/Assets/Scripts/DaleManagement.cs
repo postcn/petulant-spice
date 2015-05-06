@@ -18,6 +18,10 @@ public class DaleManagement : MonoBehaviour {
 
     public int delayTime = 0;
 
+    public bool isAFK() {
+        return delayTime > 0;
+    }
+
 	// Use this for initialization
 	void Start () {
         self = this;

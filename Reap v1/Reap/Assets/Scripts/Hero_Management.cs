@@ -19,9 +19,22 @@ public class Hero_Management : Character {
     private const float LIGHT_RANGE_STEP = 40.0f/MAX_BLOODLUST;
     private const float COLOR_STEP = 1.0f/MAX_BLOODLUST;
 
+    private int samplesCollected = 0;
     private int bloodlustCount = 0;
     private bool dying = false;
     public Constants.WEAPONS weapon {get; set;}
+
+    public int getSamplesCollected() {
+        return samplesCollected;
+    }
+
+    public void addSamples(int sampleAmount) {
+        this.samplesCollected += sampleAmount;
+    }
+
+    public void removeSamples(int decreaseAmount) {
+        this.samplesCollected -= decreaseAmount;
+    }
 
     public int getBloodlustCount() {
         return bloodlustCount;

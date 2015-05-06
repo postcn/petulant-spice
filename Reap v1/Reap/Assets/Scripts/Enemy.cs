@@ -4,6 +4,7 @@ using System.Collections;
 public class Enemy : Character {
     Transform player;               // Reference to the player's position.
     NavMeshAgent nav;               // Reference to the nav mesh agent.
+    public const int SAMPLE_COUNT = 10;
 
 	// Use this for initialization
 	protected override void Start () {
@@ -26,5 +27,9 @@ public class Enemy : Character {
         {
             this.kill(Constants.DEATH_REASONS.Fighting); //For testing, just kill the enemy
         }
+    }
+
+    protected override int getSampleCount() {
+        return SAMPLE_COUNT;
     }
 }

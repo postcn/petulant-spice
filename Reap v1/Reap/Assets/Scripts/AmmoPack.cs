@@ -10,10 +10,13 @@ public class AmmoPack : MonoBehaviour {
     
     private bool resupplying = false;
     private AudioSource resupply_audio;
+    private Light halo;
+    private float step = -0.01f;
     
     // Use this for initialization
     void Start () {
         resupply_audio = thisAmmopack.GetComponent<AudioSource>();
+        halo = this.thisAmmopack.GetComponent<Light>();
     }
     
     void OnCollisionEnter(Collision collision) {
@@ -33,6 +36,10 @@ public class AmmoPack : MonoBehaviour {
             Destroy(thisAmmopack);
             GameObject o = Instantiate(replacementObject);
             o.transform.position = Hero_Management.self.transform.position;
-        }  
+        }
+        halo.intensity += step;
+        if (halo.intensity <= 0 || halo.intensity >= 1) {
+            step *= -1;
+        }
     }
 }
