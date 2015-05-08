@@ -131,4 +131,8 @@ public class Hero_Management : Character {
         sources[2].Play();
         StartCoroutine(Constants.Wait(HERO_DEATH_DELAY, base.kill, reason));
     }
+
+    public void pickUp() {
+        base.kill(Constants.DEATH_REASONS.DropShip);
+    }
 }

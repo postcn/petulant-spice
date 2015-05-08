@@ -9,7 +9,7 @@ public class Constants {
     public const String HERO_TAG = "Hero";
     public const String ENEMY_TAG = "Enemy";
 
-    public enum DEATH_REASONS {Fire, Fighting, Bloodlust};
+    public enum DEATH_REASONS {Fire, Fighting, Bloodlust, DropShip};
 
     public enum WEAPONS {Pistol, Rifle, MachineGun};
 
@@ -18,5 +18,34 @@ public class Constants {
         if (method != null) {
             method(reason);
         }
+    }
+
+    public static void playRandomAudio(AudioClip[] clips) {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(clips.Length);
+        AudioSource.PlayClipAtPoint(clips[index], Camera.main.transform.position);
+    }
+
+    //Accurate only to hours. Breaks after that.
+    public static String formatSecondsToMinute(int seconds) {
+        int step = 60;
+        int current = 60;
+        bool shortened = false;
+        int val = seconds % current;
+        if (val < 10) {
+            shortened = true;
+        }
+        String ret = "" + val;
+        while (seconds / current > 0) {
+            String lastPiece = shortened ? "0" + ret : ret;
+            val = (seconds / current) % step;
+            if (val < 10) {
+                shortened = true;
+            }
+            ret = val + ":" + lastPiece;
+            current *= step;
+        }
+
+        return ret;
     }
 }

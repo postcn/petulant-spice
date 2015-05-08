@@ -20,7 +20,8 @@ public class DropZone : MonoBehaviour {
 	    if (activated && Hero_Management.self != null) {
             float f = distance(drop.transform.position, Hero_Management.self.transform.position);
             if (f < RADIUS) {
-                Debug.Log("Drop ship pickup!");
+                DropZoneManager.self.picked_up = true;
+                Hero_Management.self.pickUp();
             }
         }
 	}

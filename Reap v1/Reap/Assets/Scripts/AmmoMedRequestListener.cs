@@ -109,6 +109,7 @@ public class AmmoMedRequestListener : MonoBehaviour {
 		System.Random rnd = new System.Random();
 		int r = rnd.Next(scripts.Count);
 		scripts[r].spawnMed();
+        Hero_Management.self.removeSamples(MEDPACK_COST);
         StartCoroutine(PlayRandomAudio(medSuccess));
 	}
 
@@ -116,6 +117,7 @@ public class AmmoMedRequestListener : MonoBehaviour {
 		System.Random rnd = new System.Random();
 		int r = rnd.Next(scripts.Count);
 		scripts[r].spawnAmmo();
+        Hero_Management.self.removeSamples(AMMO_COST);
         StartCoroutine(PlayRandomAudio(ammoSuccess));
 	}
 }

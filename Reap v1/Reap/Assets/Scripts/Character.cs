@@ -14,6 +14,10 @@ public class Character : MonoBehaviour {
         this.body = body;
     }
 
+    public int getHealth() {
+        return this.health;
+    }
+
 	// Use this for initialization
 	protected virtual void Start () {
 	

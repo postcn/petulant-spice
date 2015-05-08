@@ -3,17 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class DropZoneManager : MonoBehaviour {
-    public const int SAMPLES_NEEDED = 500;
+    public const int SAMPLES_NEEDED = 50;
     public static DropZoneManager self;
     IList<DropZone> dropZones;
     private bool active = false;
 
-    private const int MIN_DROP_WAIT = 60;
-    private const int MAX_DROP_WAIT = 240;
+    private const int MIN_DROP_WAIT = 6;
+    private const int MAX_DROP_WAIT = 24;
 
     public AudioClip[] dropShipInbound;
     public AudioClip[] dropShipDelayed;
     public AudioClip[] dropShipArrived;
+
+    public bool picked_up = false;
+    public int delayTime = 0;
+
+    private DropZone zone;
+    private int timesDelayed = 0;
+    private const int MAX_TIMES_DELAYED = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -37,26 +44,31 @@ public class DropZoneManager : MonoBehaviour {
     void sendDropShip() {
         active = true;
         System.Random r = new System.Random();
-        DropZone zone = dropZones[r.Next(dropZones.Count)];
+        zone = dropZones[r.Next(dropZones.Count)];
         int wait = r.Next(MIN_DROP_WAIT, MAX_DROP_WAIT);
-        playRandomAudio(dropShipInbound);
-        StartCoroutine(DropShip(zone, wait));
+        Constants.playRandomAudio(dropShipInbound);
+        delayTime = wait;
+        //StartCoroutine(DropShip(zone, wait));
+        StartCoroutine(Wait());
     }
 
-    IEnumerator DropShip(DropZone zone, int wait) {
-        yield return new WaitForSeconds(wait);
-        System.Random r = new System.Random();
-        if (r.Next(2) == 0) {
-            playRandomAudio(dropShipDelayed);
-            yield return new WaitForSeconds(r.Next(MIN_DROP_WAIT, MAX_DROP_WAIT));
+    IEnumerator Wait() {
+        yield return new WaitForSeconds(1);
+        delayTime--;
+        if (delayTime <=0 ) {
+            System.Random r = new System.Random();
+            if (r.Next(2) == 0 && timesDelayed < MAX_TIMES_DELAYED) {
+                Constants.playRandomAudio(dropShipDelayed);
+                delayTime = r.Next(MIN_DROP_WAIT, MAX_DROP_WAIT);
+                StartCoroutine(Wait());
+            }
+            else {
+                Constants.playRandomAudio(dropShipArrived);
+                zone.activate();
+            }
         }
-        playRandomAudio(dropShipArrived);
-        zone.activate();
-    }
-
-    void playRandomAudio(AudioClip[] clips) {
-        System.Random rnd = new System.Random();
-        int index = rnd.Next(clips.Length);
-        AudioSource.PlayClipAtPoint(clips[index], Camera.main.transform.position);
+        else {
+            StartCoroutine(Wait());
+        }
     }
 }
