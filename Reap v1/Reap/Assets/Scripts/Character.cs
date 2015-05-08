@@ -27,6 +27,8 @@ public class Character : MonoBehaviour {
 	protected virtual void Update () {
 	    if (this.transform.position.y <= Constants.MAP_FLOOR) {
             kill(Constants.DEATH_REASONS.Fire);
+        } else if (this.health <= 0) {
+            kill(Constants.DEATH_REASONS.Fighting);
         }
 	}
 

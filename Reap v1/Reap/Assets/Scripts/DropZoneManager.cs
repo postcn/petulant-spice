@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class DropZoneManager : MonoBehaviour {
-    public const int SAMPLES_NEEDED = 50;
+    public const int SAMPLES_NEEDED = 500;
     public static DropZoneManager self;
     IList<DropZone> dropZones;
     private bool active = false;
 
-    private const int MIN_DROP_WAIT = 6;
-    private const int MAX_DROP_WAIT = 24;
+    private const int MIN_DROP_WAIT = 30;
+    private const int MAX_DROP_WAIT = 120;
 
     public AudioClip[] dropShipInbound;
     public AudioClip[] dropShipDelayed;
@@ -33,6 +33,9 @@ public class DropZoneManager : MonoBehaviour {
             if (!active) {
                 sendDropShip();
             }
+        }
+        if (Hero_Management.self == null) {
+            StopCoroutine(Wait());
         }
     }
 	

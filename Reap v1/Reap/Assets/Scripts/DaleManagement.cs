@@ -2,17 +2,21 @@
 using System.Collections;
 
 public class DaleManagement : MonoBehaviour {
-    public const int MIN_TIME_BEFORE_DELAY = 6;
-    public const int MAX_TIME_BEFORE_DELAY = 36;
+    public const int MIN_TIME_BEFORE_DELAY = 60;
+    public const int MAX_TIME_BEFORE_DELAY = 360;
     public const int MIN_TIME_BEFORE_JOKE = 60;
     public const int MAX_TIME_BEFORE_JOKE = 240;
 
     public AudioClip[] delayClips;
     public AudioClip[] jokeClips;
+    public AudioClip[] firedClips;
     private int[] delayClipsPlayTimes;
     private int[] jokeClipsPlayTimes;
     private int mostPlayedDelay = 0;
     private int mostPlayedJoke = 0;
+    private bool fired = false;
+    private IEnumerator delay;
+    private IEnumerator joke;
 
     public static DaleManagement self;
 
@@ -27,14 +31,30 @@ public class DaleManagement : MonoBehaviour {
         self = this;
         delayClipsPlayTimes = new int[delayClips.Length];
         jokeClipsPlayTimes = new int[jokeClips.Length];
-        StartCoroutine(Delay());
-        StartCoroutine(Joke());
+        delay = Delay();
+        joke = Joke();
+        StartCoroutine(delay);
+        StartCoroutine(joke);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    
+	    if (Fired() || DropZoneManager.self.picked_up) {
+            StopCoroutine(delay);
+            StopCoroutine(joke);
+        }
 	}
+
+    private bool Fired() {
+        if (Hero_Management.self == null && !DropZoneManager.self.picked_up){
+            if (!fired) {
+                fired = true;
+                Constants.playRandomAudio(firedClips);
+            }
+            return true;
+        }
+        return false;
+    }
 
     IEnumerator Delay() {
         if (delayTime == 0) {
@@ -53,7 +73,6 @@ public class DaleManagement : MonoBehaviour {
             delayTime = Mathf.Max(Mathf.RoundToInt(clip.length), MIN_TIME_BEFORE_DELAY);
             AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
         } else {
-            Debug.Log("Dale will be undelayed in " + delayTime);
             yield return new WaitForSeconds(1);
         }
         delayTime--;
@@ -63,7 +82,6 @@ public class DaleManagement : MonoBehaviour {
 
     IEnumerator Joke() {
         int jokeSeconds = Random.Range(MIN_TIME_BEFORE_JOKE, MAX_TIME_BEFORE_JOKE);
-        Debug.Log("Dale will Joke in " + jokeSeconds);
         yield return new WaitForSeconds(jokeSeconds);
         if (delayTime > 0) {
             StartCoroutine(Joke());

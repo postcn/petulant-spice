@@ -13,6 +13,8 @@ public class Hero_Management : Character {
     public const int KILL_DECREASE = 10;
     public const int MAX_HERO_HEALTH = 100;
 
+    public AudioClip[] injurySounds;
+
 
     private const float VOLUME_STEP = 2.0f/MAX_BLOODLUST;
     private const float LIGHT_STEP = 5.0f/MAX_BLOODLUST;
@@ -104,6 +106,11 @@ public class Hero_Management : Character {
 
     public void heal(int amount) {
         this.health = Mathf.Min(this.health+amount, MAX_HERO_HEALTH);
+    }
+
+    public void injure(int amount) {
+        this.health -= amount;
+        Constants.playRandomAudio(injurySounds);
     }
 
     public void resupply(int ammo) {
