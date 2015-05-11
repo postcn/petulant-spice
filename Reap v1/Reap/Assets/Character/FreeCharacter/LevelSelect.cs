@@ -10,15 +10,15 @@ public class LevelSelect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
     public void GoToGorgoron(){
-        Application.LoadLevel ("Gorgoron7"); 
+
+        Application.LoadLevel ("GorgoronLoader"); 
     }
 
     public void GoToCave(){
-        Application.LoadLevel ("CoolCave"); 
+        Application.LoadLevelAsync ("CaveLoader"); 
     }
 
     public void GoToHome(){

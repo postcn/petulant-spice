@@ -1,24 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\DaleManagement.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CaveLoader.cs">
     <Files>
-      <File FileName="Assets\Scripts\Enemy.cs" Line="15" Column="19" />
-      <File FileName="Assets\Scripts\DaleManagement.cs" Line="9" Column="5" />
-      <File FileName="Assets\Scripts\DropZoneManager.cs" Line="6" Column="42" />
-      <File FileName="Assets\Scripts\GuiManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DropZone.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Bullet.cs" Line="1" Column="1" />
-      <File FileName="Assets\Character\FreeCharacter\Fire.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\EnemyManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Character\FreeCharacter\UpdateCharacter.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Hero_Management.cs" Line="113" Column="49" />
-      <File FileName="Assets\Character\FreeCharacter\Movement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AmmoMedSpawnerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Character.cs" Line="31" Column="52" />
-      <File FileName="Assets\Scripts\Constants.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MedPack.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AmmoMedRequestListener.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CameraFollow.cs" Line="1" Column="1" />
+      <File FileName="Assets\Character\FreeCharacter\LevelSelect.cs" Line="26" Column="6" />
+      <File FileName="Assets\Scripts\GorgoronLoader.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CaveLoader.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
