@@ -7,6 +7,8 @@ public class Enemy : Character {
     public const int SAMPLE_COUNT = 10;
     protected int attack;
 
+    public bool hasScent = true;
+
 	// Use this for initialization
 	protected override void Start () {
         this.gameObject.tag = "Enemy";
@@ -21,7 +23,21 @@ public class Enemy : Character {
         base.Update();
         if (player != null) {
             //Null check because player is null in Game Over situation.
-            nav.SetDestination (player.position);
+
+            float playerX = player.position.x;
+            float playerY = player.position.y;
+            float enemyX = this.transform.position.x;
+            float enemyY = this.transform.position.y;
+            
+            float distance = Mathf.Sqrt(Mathf.Pow((playerX - enemyX), 2) + Mathf.Pow((playerY - enemyY), 2));
+            if (distance < 25)
+            {
+                hasScent = true;
+            }
+
+            if (hasScent) {
+                nav.SetDestination (player.position);
+            }
         } 
     }
 

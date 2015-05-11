@@ -1,10 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CaveLoader.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\EnemyManager.cs">
     <Files>
-      <File FileName="Assets\Character\FreeCharacter\LevelSelect.cs" Line="26" Column="6" />
+      <File FileName="Assets\Scripts\Enemy.cs" Line="20" Column="6" />
+      <File FileName="Assets\Character\FreeCharacter\LevelSelect.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GorgoronLoader.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CaveLoader.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EnemyManager.cs" Line="32" Column="131" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
