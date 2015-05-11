@@ -87,7 +87,6 @@
      <Compile Include="Assets\Scripts\Hero_Management.cs" />
      <Compile Include="Assets\Scripts\LoadingSceneScript.cs" />
      <Compile Include="Assets\Scripts\MedPack.cs" />
-     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
      <None Include="Assets\Container Barrel\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Container Barrel\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Container Barrel\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
