@@ -7,7 +7,7 @@ public class Fire : MonoBehaviour {
     private static int framesToFire = 0;
     public GameObject bulletPrefab;
 
-    public static void DoFire(Transform hero, Vector3 mousePoint, GameObject bulletPrefab) {
+    public static void DoFire(Transform hero, Vector3 mousePoint, float maxAngle, GameObject bulletPrefab) {
         if (framesToFire != 0) {
             framesToFire--;
             return;
@@ -18,10 +18,31 @@ public class Fire : MonoBehaviour {
         if (!Hero_Management.self.fireWeapon(1)) {
             return;
         }
-        SetWeaponFireRate(Hero_Management.self.weapon);
+
+        //Calculate rotated mouse point for bloodlust
+        Vector3 destination = Vector3.zero;
+        float angle = Random.Range(0f, maxAngle) * (Random.Range(0, 2) == 0 ? -1 : 1);
+        Vector3 heading = mousePoint - Camera.main.transform.position;
+        Vector3 rayDirection = heading / heading.magnitude;
+        Plane characterPlane = new Plane(hero.up, hero.position);
+        Ray mouseRay = new Ray(Camera.main.transform.position, rayDirection);
+        float distance;
+        Vector3 direction = Quaternion.AngleAxis(-angle, Camera.main.transform.forward) * mouseRay.direction;
+        Ray negative = new Ray(Camera.main.transform.position, direction);
+        
+        if (characterPlane.Raycast(negative, out distance))
+        {
+            destination = negative.GetPoint(distance);
+            destination.y = hero.position.y;
+        }
+
+        //Instantiate game object
         GameObject bullet = Instantiate(bulletPrefab);
         bullet.SendMessage("SetOrigin", hero);
-        bullet.SendMessage("SetDestination", mousePoint);
+        bullet.SendMessage("SetDestination", destination);
+
+        //Reset fire rate
+        SetWeaponFireRate(Hero_Management.self.weapon);
     }
 
     public static void SetWeaponFireRate(Constants.WEAPONS weapon) {

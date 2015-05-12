@@ -15,16 +15,18 @@ public class UpdateCharacter : MonoBehaviour {
     }
     
     void Update() {
-        //Don't fire until we've loaded hero management. Otherwise we don't know what we're shooting.
         Vector3 mousePoint = GetMousePoint();
+        float maxAngle = MaxAngle();
 
+        //Don't fire until we've loaded hero management. Otherwise we don't know what we're shooting.
         managementLoaded = (Hero_Management.self != null);
         if (managementLoaded) {
-            Fire.DoFire(this.transform, mousePoint, bullet);
+            Fire.DoFire(this.transform, mousePoint, maxAngle, bullet);  
         }
 
         Movement.Move(this.transform, mousePoint);
-        GenerateSight.Generate(line, this.transform.position, mousePoint);
+        mousePoint = GetMousePoint(); //Update the mouse point in the new, shifted world position
+        GenerateSight.Generate(line, this.transform, mousePoint, maxAngle);
         Cheat();
     }
     
@@ -38,6 +40,11 @@ public class UpdateCharacter : MonoBehaviour {
             return mousePoint;
         }
         return this.transform.position;
+    }
+
+    float MaxAngle() {
+        int count = Hero_Management.self.getBloodlustCount();
+        return (0.0084f * count * count + 0.0564f * count - 0.1818f);// * Mathf.PI / 180f;
     }
 
     void Cheat() {
