@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class GuiManager : MonoBehaviour {
-    public const string format = "Health: {0}\r\nSamples: {1}\r\nAmmo: {2}";
+	public const string format = "Health: {0}\r\nAmmo: {2}\r\nSamples: {1}";
     public const string GAME_OVER = "Game Over!";
     public const string VICTORY = "Victory!";
     public const string DROP_SHIP = "The drop ship will arive in {0}.";
