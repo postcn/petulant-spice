@@ -16,15 +16,18 @@ public class GuiManager : MonoBehaviour {
     public AudioClip gameOver;
     public AudioClip gameVictory;
     private bool played = false;
+    public Button ReturnButton;
 	
 	// Update is called once per frame
 	void Update () {
+        ReturnButton.gameObject.SetActive(false);
         if (Hero_Management.self != null && heroStatus != null) {
             heroStatus.text = string.Format(format, Hero_Management.self.getHealth(), Hero_Management.self.getSamplesCollected());
         }
 
         if (Hero_Management.self == null && !DropZoneManager.self.picked_up) {
             largeNotification.text = GAME_OVER;
+            ReturnButton.gameObject.SetActive(true);
             if (!played) {
                 AudioSource.PlayClipAtPoint(gameOver, Camera.main.transform.position);
                 played = true;
@@ -32,6 +35,7 @@ public class GuiManager : MonoBehaviour {
         } else if (Hero_Management.self == null && DropZoneManager.self.picked_up) {
             largeNotification.text = VICTORY;
             largeNotification.color = Color.green;
+            ReturnButton.gameObject.SetActive(true);
             if (!played) {
                 AudioSource.PlayClipAtPoint(gameVictory, Camera.main.transform.position);
                 played = true;

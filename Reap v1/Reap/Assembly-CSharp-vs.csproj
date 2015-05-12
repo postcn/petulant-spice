@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\Character\FreeCharacter\Fire.cs" />
      <Compile Include="Assets\Character\FreeCharacter\GenerateSight.cs" />
-     <Compile Include="Assets\Character\FreeCharacter\LevelSelect.cs" />
      <Compile Include="Assets\Character\FreeCharacter\Movement.cs" />
      <Compile Include="Assets\Character\FreeCharacter\UpdateCharacter.cs" />
      <Compile Include="Assets\Container Barrel\Standard Assets\Image Effects (Pro Only)\BlurEffect.cs" />
@@ -85,6 +84,7 @@
      <Compile Include="Assets\Scripts\GorgoronLoader.cs" />
      <Compile Include="Assets\Scripts\GuiManager.cs" />
      <Compile Include="Assets\Scripts\Hero_Management.cs" />
+     <Compile Include="Assets\Scripts\LevelSelect.cs" />
      <Compile Include="Assets\Scripts\LoadingSceneScript.cs" />
      <Compile Include="Assets\Scripts\MedPack.cs" />
      <None Include="Assets\Container Barrel\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
