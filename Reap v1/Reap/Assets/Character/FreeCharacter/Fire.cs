@@ -15,6 +15,9 @@ public class Fire : MonoBehaviour {
         if (!Input.GetMouseButton(0)) {
             return;
         }
+        if (!Hero_Management.self.fireWeapon(1)) {
+            return;
+        }
         SetWeaponFireRate(Hero_Management.self.weapon);
         GameObject bullet = Instantiate(bulletPrefab);
         bullet.SendMessage("SetOrigin", hero);

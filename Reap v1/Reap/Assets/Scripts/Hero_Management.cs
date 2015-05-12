@@ -12,8 +12,11 @@ public class Hero_Management : Character {
     public const int MIN_BLOODLUST = 0;
     public const int KILL_DECREASE = 10;
     public const int MAX_HERO_HEALTH = 100;
+    public const int MAX_START_AMMO = 300;
 
     public AudioClip[] injurySounds;
+    public AudioSource emptyMagazinePlayer;
+    public AudioClip weaponFire;
 
 
     private const float VOLUME_STEP = 2.0f/MAX_BLOODLUST;
@@ -24,6 +27,7 @@ public class Hero_Management : Character {
     private int samplesCollected = 0;
     private int bloodlustCount = 0;
     private bool dying = false;
+    private int ammo;
     public Constants.WEAPONS weapon {get; set;}
 
     public int getSamplesCollected() {
@@ -48,6 +52,7 @@ public class Hero_Management : Character {
         StartCoroutine(Bloodlust());
         this.health = MAX_HERO_HEALTH;
         this.weapon = Constants.WEAPONS.Pistol;
+        this.ammo = MAX_START_AMMO;
 	}
 
     private void increaseBloodlust() {
@@ -55,7 +60,7 @@ public class Hero_Management : Character {
 
         AudioSource[] sources = this.GetComponents<AudioSource>();
         foreach (AudioSource source in sources) {
-            source.volume = source.volume + VOLUME_STEP;
+            source.volume = source.volume + VOLUME_STEP*2;
         }
 
         if (bloodlustCount == HEARTBEAT_THRESHOLD) {
@@ -114,7 +119,23 @@ public class Hero_Management : Character {
     }
 
     public void resupply(int ammo) {
-        //TODO: Implement the reloading and resupplying mechanics.
+        this.ammo += ammo;
+    }
+
+    public bool fireWeapon(int count) {
+        if (ammo < count) {
+            if (!emptyMagazinePlayer.isPlaying) {
+                emptyMagazinePlayer.Play();
+            }
+            return false;
+        }
+        AudioSource.PlayClipAtPoint(this.weaponFire, this.transform.position);
+        this.ammo -= count;
+        return true;
+    }
+
+    public int getCurrentAmmunition() {
+        return this.ammo;
     }
 
     IEnumerator Bloodlust() {

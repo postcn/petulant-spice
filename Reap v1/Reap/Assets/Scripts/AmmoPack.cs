@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AmmoPack : MonoBehaviour {
 
-    public const int AMMO_AMOUNT = 50;
+    public const int AMMO_AMOUNT = 300;
     
     public GameObject replacementObject;
     public GameObject thisAmmopack;
@@ -32,7 +32,7 @@ public class AmmoPack : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         if (resupplying && !resupply_audio.isPlaying) {
-            Hero_Management.self.heal(AMMO_AMOUNT);
+            Hero_Management.self.resupply(AMMO_AMOUNT);
             Destroy(thisAmmopack);
             GameObject o = Instantiate(replacementObject);
             o.transform.position = Hero_Management.self.transform.position;

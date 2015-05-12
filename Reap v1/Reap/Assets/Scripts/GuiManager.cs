@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class GuiManager : MonoBehaviour {
-    public const string format = "Health: {0}\r\nSamples: {1}";
+    public const string format = "Health: {0}\r\nSamples: {1}\r\nAmmo: {2}";
     public const string GAME_OVER = "Game Over!";
     public const string VICTORY = "Victory!";
     public const string DROP_SHIP = "The drop ship will arive in {0}.";
@@ -20,9 +20,13 @@ public class GuiManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKey("escape")) {
+            Application.Quit();
+        }
+            
         ReturnButton.gameObject.SetActive(false);
         if (Hero_Management.self != null && heroStatus != null) {
-            heroStatus.text = string.Format(format, Hero_Management.self.getHealth(), Hero_Management.self.getSamplesCollected());
+            heroStatus.text = string.Format(format, Hero_Management.self.getHealth(), Hero_Management.self.getSamplesCollected(), Hero_Management.self.getCurrentAmmunition());
         }
 
         if (Hero_Management.self == null && !DropZoneManager.self.picked_up) {
