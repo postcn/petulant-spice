@@ -32,6 +32,7 @@ public class Bullet : MonoBehaviour {
     void SetOrigin(Transform hero) {
         Physics.IgnoreCollision(hero.GetComponent<Collider>(), GetComponent<Collider>());
         this.origin = hero.position;
+        this.origin.y += .2f;
         Vector3 angle = hero.eulerAngles;
         angle.x = 90;
         this.transform.eulerAngles = angle;
@@ -51,6 +52,7 @@ public class Bullet : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision) {
         string tag = collision.gameObject.tag;
+        //print("Collided with " + tag);
         if (tag == "Map" || tag == "Structure") {
             Destroy(this.gameObject);
         }

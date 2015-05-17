@@ -6,9 +6,14 @@ public class Movement : MonoBehaviour {
     private const float FUDGE_FACTOR = 0.05f;
 	private static float speed = 0.06f;
 	
-    public static void Move(Transform hero, Vector3 mousePoint) {
+    public static void Move(Transform hero, Vector3 mousePoint, bool mousePlayer) {
         Rotate(hero, mousePoint);
-        UpdatePosition(hero);
+        if (mousePlayer) {
+            UpdatePosition(hero);
+        }
+        else {
+            UpdatePositionWithJoystick(hero);
+        }
     }
 
 	private static void Rotate(Transform hero, Vector3	mousePoint) {
@@ -45,4 +50,21 @@ public class Movement : MonoBehaviour {
 		}
 		hero.position += delta;
 	}
+
+    private static void UpdatePositionWithJoystick(Transform hero) {
+        Vector3 delta = Vector3.zero;
+        delta.x = Input.GetAxis("Horizontal");
+        delta.z = Input.GetAxis("Vertical");
+        //delta.Normalize();
+        delta *= speed;
+        //Make the hero slower based upon
+        if (Hero_Management.self != null && Hero_Management.self.getBloodlustCount() > Hero_Management.BREATHING_THRESHOLD) {
+            float lust = (float) Hero_Management.self.getBloodlustCount();
+            delta *= (1.0f -  (lust - Hero_Management.BREATHING_THRESHOLD) / Hero_Management.MAX_BLOODLUST);
+        }
+        if (Input.GetAxis("Trigger") >= .3f) {
+            delta *= 2;
+        }
+        hero.position += delta;
+    }
 }

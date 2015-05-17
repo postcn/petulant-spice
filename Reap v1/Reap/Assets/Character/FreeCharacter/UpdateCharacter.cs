@@ -6,6 +6,7 @@ public class UpdateCharacter : MonoBehaviour {
     LineRenderer line;
     public GameObject bullet;
     bool managementLoaded = false;
+    public bool mousePlayer;
 
     void Start() {
         line = gameObject.GetComponent<LineRenderer>();
@@ -21,10 +22,10 @@ public class UpdateCharacter : MonoBehaviour {
         //Don't fire until we've loaded hero management. Otherwise we don't know what we're shooting.
         managementLoaded = (Hero_Management.self != null);
         if (managementLoaded) {
-            Fire.DoFire(this.transform, mousePoint, maxAngle, bullet);  
+            Fire.DoFire(this.transform, mousePoint, maxAngle, bullet, mousePlayer);  
         }
 
-        Movement.Move(this.transform, mousePoint);
+        Movement.Move(this.transform, mousePoint, mousePlayer);
         mousePoint = GetMousePoint(); //Update the mouse point in the new, shifted world position
         GenerateSight.Generate(line, this.transform, mousePoint, maxAngle);
         Cheat();
@@ -48,14 +49,27 @@ public class UpdateCharacter : MonoBehaviour {
     }
 
     void Cheat() {
-        if (Input.GetKey(KeyCode.Alpha1)) {
-            Hero_Management.self.weapon = Constants.WEAPONS.Pistol;
+        if (mousePlayer) {
+            if (Input.GetKey(KeyCode.Alpha1)) {
+                Hero_Management.self.weapon = Constants.WEAPONS.Pistol;
+            }
+            else if (Input.GetKey(KeyCode.Alpha2)) {
+                Hero_Management.self.weapon = Constants.WEAPONS.Rifle;
+            }
+            else if (Input.GetKey(KeyCode.Alpha3)) {
+                Hero_Management.self.weapon = Constants.WEAPONS.MachineGun;
+            }
         }
-        else if (Input.GetKey(KeyCode.Alpha2)) {
-            Hero_Management.self.weapon = Constants.WEAPONS.Rifle;
-        }
-        else if (Input.GetKey(KeyCode.Alpha3)) {
-            Hero_Management.self.weapon = Constants.WEAPONS.MachineGun;
+        else {
+            if (Input.GetButton("JoystickX")) {
+                Hero_Management.self.weapon = Constants.WEAPONS.Pistol;
+            }
+            else if (Input.GetButton("JoystickY")) {
+                Hero_Management.self.weapon = Constants.WEAPONS.Rifle;
+            }
+            else if (Input.GetButton("JoystickB")) {
+                Hero_Management.self.weapon = Constants.WEAPONS.MachineGun;
+            }
         }
     }
 }

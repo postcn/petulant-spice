@@ -7,12 +7,12 @@ public class Fire : MonoBehaviour {
     private static int framesToFire = 0;
     public GameObject bulletPrefab;
 
-    public static void DoFire(Transform hero, Vector3 mousePoint, float maxAngle, GameObject bulletPrefab) {
+    public static void DoFire(Transform hero, Vector3 mousePoint, float maxAngle, GameObject bulletPrefab, bool mousePlayer) {
         if (framesToFire != 0) {
             framesToFire--;
             return;
         }
-        if (!Input.GetMouseButton(0)) {
+        if (!((mousePlayer && Input.GetMouseButton(0)) || (!mousePlayer && Input.GetAxis("Trigger") <= -.3f))) {
             return;
         }
         if (!Hero_Management.self.fireWeapon(1)) {
@@ -33,7 +33,7 @@ public class Fire : MonoBehaviour {
         if (characterPlane.Raycast(negative, out distance))
         {
             destination = negative.GetPoint(distance);
-            destination.y = hero.position.y;
+            destination.y = hero.position.y + .2f;
         }
 
         //Instantiate game object
