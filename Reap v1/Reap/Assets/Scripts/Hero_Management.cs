@@ -10,7 +10,7 @@ public class Hero_Management : Character {
     public const int BREATHING_THRESHOLD = 75;
     public const int MAX_BLOODLUST = 100;
     public const int MIN_BLOODLUST = 0;
-    public const int KILL_DECREASE = 10;
+    public const int KILL_DECREASE = 1;
     public const int MAX_HERO_HEALTH = 100;
     public const int MAX_START_AMMO = 300;
 
@@ -123,15 +123,19 @@ public class Hero_Management : Character {
     }
 
     public bool fireWeapon(int count) {
-        if (ammo < count) {
-            if (!emptyMagazinePlayer.isPlaying) {
-                emptyMagazinePlayer.Play();
-            }
-            return false;
+        if (weapon == Constants.WEAPONS.Pistol) {
+            AudioSource.PlayClipAtPoint(this.weaponFire, this.transform.position);
+            return true;
         }
-        AudioSource.PlayClipAtPoint(this.weaponFire, this.transform.position);
-        this.ammo -= count;
-        return true;
+        if (count <= ammo) {
+            AudioSource.PlayClipAtPoint(this.weaponFire, this.transform.position);
+            this.ammo -= count;
+            return true;
+        }
+        if (!emptyMagazinePlayer.isPlaying) {
+            emptyMagazinePlayer.Play();
+        }
+        return false;
     }
 
     public int getCurrentAmmunition() {

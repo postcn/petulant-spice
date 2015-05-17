@@ -15,12 +15,17 @@ public class Enemy : Character {
         player = GameObject.FindGameObjectWithTag ("Hero").transform;
         nav = GetComponent <NavMeshAgent> ();
         attack = 5;
-        health = 50;
 	}
 
     protected override void Update()
     {
         base.Update();
+        if (health <= 0)
+        {
+            this.kill(Constants.DEATH_REASONS.Fighting);
+            return;
+        }
+
         if (player != null) {
             //Null check because player is null in Game Over situation.
 
@@ -42,12 +47,14 @@ public class Enemy : Character {
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            this.kill(Constants.DEATH_REASONS.Fighting); //For testing, just kill the enemy
-        } else if (collision.gameObject.CompareTag("Hero")) {
+        if (collision.gameObject.CompareTag("Hero")) {
             Hero_Management.self.injure(this.attack);
         }
+    }
+
+    public void TakeDamage(int damage) {
+        this.health -= damage;
+        print("Taking " + damage + " damage, health at " + health);
     }
 
     protected override int getSampleCount() {

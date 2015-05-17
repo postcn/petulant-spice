@@ -5,7 +5,7 @@ public class Character : MonoBehaviour {
 
     public GameObject body;
     public GameObject fireDeathReplacement;
-    protected int health;
+    public int health;
 
     public Character() {}
 

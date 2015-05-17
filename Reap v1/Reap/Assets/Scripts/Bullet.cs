@@ -5,6 +5,8 @@ public class Bullet : MonoBehaviour {
 
     private bool init = false;
     private int framesToLive = 90;
+    private int damage;
+
     private Vector3 origin;
     private Vector3 destination;
     private Vector3 direction;
@@ -43,11 +45,18 @@ public class Bullet : MonoBehaviour {
         this.init = true;
     }
 
+    void SetDamage(float damage) {
+        this.damage = Mathf.RoundToInt(damage);
+    }
+
     void OnCollisionEnter(Collision collision) {
         string tag = collision.gameObject.tag;
-        if (tag == "Map" || tag == "Hero" || tag == "Untagged") {
-            return;
+        if (tag == "Map" || tag == "Structure") {
+            Destroy(this.gameObject);
         }
-        Destroy(this.gameObject);
+        if (tag == "Enemy") {
+            collision.gameObject.SendMessage("TakeDamage", damage);
+            Destroy(this.gameObject);
+        }
     }
 }

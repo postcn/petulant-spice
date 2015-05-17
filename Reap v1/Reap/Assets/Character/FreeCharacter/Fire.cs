@@ -40,9 +40,27 @@ public class Fire : MonoBehaviour {
         GameObject bullet = Instantiate(bulletPrefab);
         bullet.SendMessage("SetOrigin", hero);
         bullet.SendMessage("SetDestination", destination);
+        bullet.SendMessage("SetDamage", GetDamage());
 
         //Reset fire rate
         SetWeaponFireRate(Hero_Management.self.weapon);
+    }
+
+    private static float GetDamage() {
+        switch (Hero_Management.self.weapon) {
+            case Constants.WEAPONS.Pistol:
+                return 30f * GetDamageModifier();
+            case Constants.WEAPONS.Rifle:
+                return 60f * GetDamageModifier();
+            case Constants.WEAPONS.MachineGun:
+                return 40f * GetDamageModifier();
+            default:
+                return 0f; //Unimplemented weapon. Why doesn't C# have pattern matching?
+        }
+    }
+
+    private static float GetDamageModifier() {
+        return 0.9947f * Mathf.Exp(.011f * Hero_Management.self.getBloodlustCount());
     }
 
     public static void SetWeaponFireRate(Constants.WEAPONS weapon) {

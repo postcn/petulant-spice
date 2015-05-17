@@ -4,7 +4,6 @@ using System.Collections;
 public class GenerateSight : MonoBehaviour {
 
     private static float FUDGE_FACTOR = 0.05f;
-    private static Vector3 FUDGE_VECTOR = new Vector3(0, FUDGE_FACTOR, 0);
 
     public static void Generate(LineRenderer line, Transform hero, Vector3 mousePoint, float angle) {
         line.SetVertexCount(3);
@@ -21,7 +20,7 @@ public class GenerateSight : MonoBehaviour {
         if (characterPlane.Raycast(negative, out distance))
         {
             r = negative.GetPoint(distance);
-            r.y = hero.position.y + FUDGE_FACTOR + .00001f;
+            r.y = hero.position.y + FUDGE_FACTOR;
             line.SetPosition(0, r);
         }
         
