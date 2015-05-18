@@ -20,7 +20,7 @@ public class Cocoon : MonoBehaviour {
     }
 
     void CheckHatchFireBullet(Vector3 position) {
-        //this.CheckHatch(position, 5.5);
+        this.CheckHatch(position, 5.5);
     }
 
     void CheckHatchMovement(Vector3 position) {

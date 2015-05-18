@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour {
         this.transform.eulerAngles = angle;
     }
 
-    void SetDestination(Vector3 mousePoint) {
+    public void SetDestination(Vector3 mousePoint) {
         this.destination = mousePoint;
         Vector3 heading = this.destination - this.origin;
         this.direction = heading / heading.magnitude;

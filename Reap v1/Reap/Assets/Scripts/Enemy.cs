@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Enemy : Character {
-    Transform player;               // Reference to the player's position.
+    public Transform player;               // Reference to the player's position.
     NavMeshAgent nav;               // Reference to the nav mesh agent.
     public const int SAMPLE_COUNT = 10;
     public int attack = 5;
