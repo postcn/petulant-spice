@@ -7,6 +7,7 @@ public class UpdateCharacter : MonoBehaviour {
     public GameObject bullet;
     bool managementLoaded = false;
     public bool mousePlayer;
+    float lastAngle = 90f;
 
     void Start() {
         line = gameObject.GetComponent<LineRenderer>();
@@ -16,7 +17,7 @@ public class UpdateCharacter : MonoBehaviour {
     }
     
     void Update() {
-        Vector3 mousePoint = GetMousePoint();
+        Vector3 mousePoint = mousePlayer ? GetMousePoint() : GetJoystickPoint();
         float maxAngle = MaxAngle();
 
         //Don't fire until we've loaded hero management. Otherwise we don't know what we're shooting.
@@ -26,7 +27,7 @@ public class UpdateCharacter : MonoBehaviour {
         }
 
         Movement.Move(this.transform, mousePoint, mousePlayer);
-        mousePoint = GetMousePoint(); //Update the mouse point in the new, shifted world position
+        mousePoint = mousePlayer ? GetMousePoint() : GetJoystickPoint(); //Update the mouse point in the new, shifted world position
         GenerateSight.Generate(line, this.transform, mousePoint, maxAngle);
         Cheat();
     }
@@ -43,9 +44,44 @@ public class UpdateCharacter : MonoBehaviour {
         return this.transform.position;
     }
 
+    Vector3 GetJoystickPoint() {
+        float vertical = Input.GetAxis("GuideVertical");
+        float horizontal = Input.GetAxis("GuideHorizontal");
+
+        float angle;
+        if (vertical * vertical + horizontal * horizontal <= 0.2f) {
+            angle = lastAngle;
+        }
+        else {
+            angle = Mathf.Atan2(vertical, horizontal) * 180f / Mathf.PI;
+            lastAngle = angle;
+        }
+
+        Vector3 joystickPoint = this.transform.position;
+        joystickPoint.x += 4f;
+        Vector3 heading = joystickPoint - Camera.main.transform.position;
+        Vector3 rayDirection = heading / heading.magnitude;
+        Ray joystickRay = new Ray(Camera.main.transform.position, rayDirection);
+        Plane characterPlane = new Plane(this.transform.up, this.transform.position);
+        
+        float distance;
+        Vector3 r;
+        Vector3 direction = Quaternion.AngleAxis(angle, Camera.main.transform.forward) * joystickRay.direction;
+        Ray negative = new Ray(Camera.main.transform.position, direction);
+        
+        if (characterPlane.Raycast(negative, out distance))
+        {
+            r = negative.GetPoint(distance);
+            r.y = this.transform.position.y;
+            return r;
+        }
+        
+        return this.transform.position;
+    }
+
     float MaxAngle() {
         int count = Hero_Management.self.getBloodlustCount();
-        return (0.0084f * count * count + 0.0564f * count - 0.1818f);// * Mathf.PI / 180f;
+        return (0.0084f * count * count + 0.0564f * count - 0.1818f);
     }
 
     void Cheat() {

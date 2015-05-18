@@ -62,7 +62,7 @@ public class Movement : MonoBehaviour {
             float lust = (float) Hero_Management.self.getBloodlustCount();
             delta *= (1.0f -  (lust - Hero_Management.BREATHING_THRESHOLD) / Hero_Management.MAX_BLOODLUST);
         }
-        if (Input.GetAxis("Trigger") >= .3f) {
+        if (Input.GetButton("LeftJoyButton")) {
             delta *= 2;
         }
         hero.position += delta;

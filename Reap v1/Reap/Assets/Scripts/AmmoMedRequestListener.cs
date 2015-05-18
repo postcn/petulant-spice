@@ -42,20 +42,20 @@ public class AmmoMedRequestListener : MonoBehaviour {
             return;
         }
 
-        if (isWaiting && (Input.GetKey (spawnMed) || Input.GetKey(spawnAmmo))) {
+        if (isWaiting && (Input.GetKey(spawnMed) || Input.GetKey(spawnAmmo) || Input.GetButton("LeftShoulder") || Input.GetButton("RightShoulder"))) {
             StartCoroutine(PlayRandomAudio(timeDenials));
             return;
 		} else if (isWaiting) {
             return;
         }
 
-		if (Input.GetKey (spawnMed) && canBuyMed()) {
+		if ((Input.GetKey(spawnMed) || Input.GetButton("LeftShoulder")) && canBuyMed()) {
 			spawnMedPack();
 			StartCoroutine(Wait());
 
 		}
 		
-		if (Input.GetKey(spawnAmmo) && canBuyAmmo()) {
+        if ((Input.GetKey(spawnAmmo) || Input.GetButton("RightShoulder")) && canBuyAmmo()) {
 			spawnAmmoPack();
 			StartCoroutine(Wait());
 		}
