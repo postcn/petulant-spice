@@ -11,15 +11,18 @@ public class AmmoMedRequestListener : MonoBehaviour {
 
     public AudioClip[] medSuccess;
     public AudioClip[] ammoSuccess;
+    public AudioClip[] huffSuccess;
 
-	private const int COOLDOWN = 60;
+	private const int COOLDOWN = 15;
 
     private const int MEDPACK_COST = 150;
     private const int AMMO_COST = 100;
+    private const int HUFF_COST = 250;
 
 	public static AmmoMedRequestListener self;
 	private KeyCode spawnMed = KeyCode.F12;
 	private KeyCode spawnAmmo = KeyCode.F11;
+    private KeyCode spawnHuff = KeyCode.F10;
 
 	private IList<AmmoMedSpawnerScript> scripts;
 
@@ -59,6 +62,11 @@ public class AmmoMedRequestListener : MonoBehaviour {
 			spawnAmmoPack();
 			StartCoroutine(Wait());
 		}
+
+        if ((Input.GetKey(spawnHuff)) && canBuyHuff()) {
+            spawnHuffCan();
+            StartCoroutine(Wait());
+        }
 	}
 
     IEnumerator PlayRandomAudio(AudioClip[] clips) {
@@ -105,6 +113,18 @@ public class AmmoMedRequestListener : MonoBehaviour {
         }
     }
 
+    private Boolean canBuyHuff() {
+        if (Hero_Management.self != null) {
+            bool val = Hero_Management.self.getSamplesCollected() >= HUFF_COST;
+            if (!val) {
+                StartCoroutine(PlayRandomAudio(moneyDenials));
+            }
+            return val;
+        } else {
+            return false;
+        }
+    }
+
 	private void spawnMedPack() {
 		System.Random rnd = new System.Random();
 		int r = rnd.Next(scripts.Count);
@@ -120,4 +140,23 @@ public class AmmoMedRequestListener : MonoBehaviour {
         Hero_Management.self.removeSamples(AMMO_COST);
         StartCoroutine(PlayRandomAudio(ammoSuccess));
 	}
+
+    private void spawnHuffCan() {
+        AmmoMedSpawnerScript closest = scripts[0];
+        float closestDist = distanceToHero(closest.startingLocation);
+        foreach (AmmoMedSpawnerScript script in scripts) {
+            float dist = distanceToHero(script.startingLocation);
+            if (dist < closestDist) {
+                closestDist = dist;
+                closest = script;
+            }
+        }
+        closest.spawnHuff();
+        Hero_Management.self.removeSamples(HUFF_COST);
+        StartCoroutine(PlayRandomAudio(huffSuccess));
+    }
+
+    private float distanceToHero(Transform position) {
+        return Mathf.Abs(Vector3.Distance(position.position, Hero_Management.self.gameObject.transform.position));
+    }
 }

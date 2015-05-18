@@ -4,6 +4,7 @@ using System.Collections;
 public class AmmoMedSpawnerScript : MonoBehaviour {
 	public GameObject medPackObject;
 	public GameObject ammoPackObject;
+    public GameObject huffObject;
 	public Transform startingLocation;
 
 	// Use this for initialization
@@ -25,4 +26,9 @@ public class AmmoMedSpawnerScript : MonoBehaviour {
 		GameObject o = Instantiate(ammoPackObject) as GameObject;
 		o.transform.position = startingLocation.position;
 	}
+
+    public void spawnHuff() {
+        GameObject o = Instantiate(huffObject) as GameObject;
+        o.transform.position = startingLocation.position;
+    }
 }

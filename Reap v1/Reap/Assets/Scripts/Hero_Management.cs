@@ -27,6 +27,7 @@ public class Hero_Management : Character {
     private int samplesCollected = 0;
     private int bloodlustCount = 0;
     private bool dying = false;
+    private int decreasedDelay = 2;
     private int ammo;
     public Constants.WEAPONS weapon {get; set;}
 
@@ -74,12 +75,31 @@ public class Hero_Management : Character {
         changeLight(1);
     }
 
+    public void clearBloodlust() {
+        changeLight(-1*bloodlustCount);
+        bloodlustCount = 0;
+        updateBloodlustComponents();
+    }
+
     public void decrementBloodlust() {
         if (bloodlustCount <= MIN_BLOODLUST) {
             return;
         }
+        if (decreasedDelay > 0) {
+            decreasedDelay--;
+            return;
+        }
+        else {
+            decreasedDelay = 2;
+        }
         bloodlustCount -= KILL_DECREASE;
         
+        updateBloodlustComponents();
+        changeLight(-1*KILL_DECREASE);
+
+    }
+
+    private void updateBloodlustComponents() {
         AudioSource[] sources = this.GetComponents<AudioSource>();
         sources[0].volume = (bloodlustCount - HEARTBEAT_THRESHOLD) * VOLUME_STEP;
         sources[1].volume = (bloodlustCount - BREATHING_THRESHOLD) * VOLUME_STEP;
@@ -90,9 +110,6 @@ public class Hero_Management : Character {
         if (bloodlustCount < BREATHING_THRESHOLD) {
             sources[1].Stop();
         }
-
-        changeLight(-1*KILL_DECREASE);
-
     }
 
     private void changeLight(int scale) {

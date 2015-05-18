@@ -41,7 +41,7 @@ public class Enemy : Character {
             }
 
             if (hasScent) {
-                nav.SetDestination (player.position);
+                //nav.SetDestination (player.position);
             }
         } 
     }
