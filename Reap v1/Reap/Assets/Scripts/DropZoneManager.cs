@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class DropZoneManager : MonoBehaviour {
-    public const int SAMPLES_NEEDED = 500;
+    public const int SAMPLES_NEEDED = 250;
     public static DropZoneManager self;
     IList<DropZone> dropZones;
     private bool active = false;

@@ -15,9 +15,9 @@ public class AmmoMedRequestListener : MonoBehaviour {
 
 	private const int COOLDOWN = 15;
 
-    private const int MEDPACK_COST = 150;
-    private const int AMMO_COST = 100;
-    private const int HUFF_COST = 250;
+    private const int MEDPACK_COST = 75;
+    private const int AMMO_COST = 50;
+    private const int HUFF_COST = 125;
 
 	public static AmmoMedRequestListener self;
 	private KeyCode spawnMed = KeyCode.F12;

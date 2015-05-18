@@ -17,6 +17,9 @@ public class HKEnemy : Enemy {
     }
     
     void Shoot() {
+        if (base.player == null) {
+            return;
+        }
         float distance = Vector3.Distance(base.player.position, this.transform.position);
         
         if (distance < 7)
