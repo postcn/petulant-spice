@@ -19,10 +19,21 @@ public class EnemyManager : MonoBehaviour
 		// Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
 		InvokeRepeating ("Spawn", spawnTime, spawnTime);
 	}
+
+    public static int countEnemies() {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        return enemies.Length;
+    }
 	
 	
 	void Spawn ()
 	{
+        //Make sure there aren't too many enemies
+        if (countEnemies() > 25)
+        {
+            return;
+        }
+
 		// If the player has no health left..
         if (Hero_Management.self == null) {
             //Hero is dead.
