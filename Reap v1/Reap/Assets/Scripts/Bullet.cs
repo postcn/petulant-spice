@@ -7,9 +7,9 @@ public class Bullet : MonoBehaviour {
     private int framesToLive = 90;
     private int damage;
 
-    private Vector3 origin;
-    private Vector3 destination;
-    private Vector3 direction;
+    protected Vector3 origin;
+    protected Vector3 destination;
+    protected Vector3 direction;
     
 	// Use this for initialization
 	void Start () {
@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour {
         this.transform.eulerAngles = angle;
     }
 
-    public void SetDestination(Vector3 mousePoint) {
+    public virtual void SetDestination(Vector3 mousePoint) {
         this.destination = mousePoint;
         Vector3 heading = this.destination - this.origin;
         this.direction = heading / heading.magnitude;

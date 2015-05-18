@@ -3,14 +3,6 @@ using System.Collections;
 
 public class HKBullet : Bullet {
     
-    private bool init = false;
-    private int framesToLive = 90;
-    private int damage;
-    
-    private Vector3 origin;
-    private Vector3 destination;
-    private Vector3 direction;
-    
     // Use this for initialization
     void Start () {
         this.gameObject.tag = "HKBullet";
@@ -30,5 +22,11 @@ public class HKBullet : Bullet {
 
     void SetRotation(float angle) {
         this.transform.rotation = Quaternion.Euler(90, angle, 90);
+    }
+
+    public override void SetDestination(Vector3 mousePoint)
+    {
+        base.SetDestination(mousePoint);
+        base.direction *= 0.5f;
     }
 }

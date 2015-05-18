@@ -56,14 +56,11 @@ public class Fire : MonoBehaviour {
     private static float GetDamage() {
         switch (Hero_Management.self.weapon) {
             case Constants.WEAPONS.Pistol:
-                //return 30f * GetDamageModifier();
-                return 35f * GetDamageModifier();
+                return 30f * GetDamageModifier();
             case Constants.WEAPONS.Rifle:
-                //return 60f * GetDamageModifier();
                 return 75f * GetDamageModifier();
             case Constants.WEAPONS.MachineGun:
-              //  return 40f * GetDamageModifier();
-                return 10f * GetDamageModifier();
+                return 40f * GetDamageModifier();
             default:
                 return 0f; //Unimplemented weapon. Why doesn't C# have pattern matching?
         }
@@ -76,16 +73,13 @@ public class Fire : MonoBehaviour {
     public static void SetWeaponFireRate(Constants.WEAPONS weapon) {
         switch (Hero_Management.self.weapon) {
             case Constants.WEAPONS.Pistol:
-                //Fire.framesToFire = 30;
-                Fire.framesToFire = 15;
-                break;
-            case Constants.WEAPONS.Rifle:
-                //Fire.framesToFire = 45;
                 Fire.framesToFire = 25;
                 break;
+            case Constants.WEAPONS.Rifle:
+                Fire.framesToFire = 45;
+                break;
             case Constants.WEAPONS.MachineGun:
-                //Fire.framesToFire = 10;
-                Fire.framesToFire = 3;
+                Fire.framesToFire = 10;
                 break;
             default:
                 Fire.framesToFire = 60;

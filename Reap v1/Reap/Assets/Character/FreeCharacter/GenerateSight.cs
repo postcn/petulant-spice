@@ -21,7 +21,7 @@ public class GenerateSight : MonoBehaviour {
         {
             r = negative.GetPoint(distance);
             r.y = hero.position.y + FUDGE_FACTOR;
-            line.SetPosition(0, r);
+            line.SetPosition(2, r);
         }
         
         r = hero.position;
@@ -34,7 +34,7 @@ public class GenerateSight : MonoBehaviour {
         if (characterPlane.Raycast(positive, out distance)) {
             r = positive.GetPoint(distance);
             r.y = hero.position.y + FUDGE_FACTOR;
-            line.SetPosition(2, r);
+            line.SetPosition(0, r);
         }
     }
 }
