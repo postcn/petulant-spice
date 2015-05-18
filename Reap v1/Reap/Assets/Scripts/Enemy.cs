@@ -5,7 +5,7 @@ public class Enemy : Character {
     Transform player;               // Reference to the player's position.
     NavMeshAgent nav;               // Reference to the nav mesh agent.
     public const int SAMPLE_COUNT = 10;
-    protected int attack;
+    public int attack = 5;
 
     public bool hasScent = true;
 
@@ -14,7 +14,6 @@ public class Enemy : Character {
         this.gameObject.tag = "Enemy";
         player = GameObject.FindGameObjectWithTag ("Hero").transform;
         nav = GetComponent <NavMeshAgent> ();
-        attack = 5;
 	}
 
     protected override void Update()
@@ -28,20 +27,15 @@ public class Enemy : Character {
 
         if (player != null) {
             //Null check because player is null in Game Over situation.
-
-            float playerX = player.position.x;
-            float playerY = player.position.y;
-            float enemyX = this.transform.position.x;
-            float enemyY = this.transform.position.y;
             
-            float distance = Mathf.Sqrt(Mathf.Pow((playerX - enemyX), 2) + Mathf.Pow((playerY - enemyY), 2));
+            float distance = Vector3.Distance(player.position, this.transform.position);
             if (distance < 25)
             {
                 hasScent = true;
             }
 
             if (hasScent) {
-                //nav.SetDestination (player.position);
+                nav.SetDestination (player.position);
             }
         } 
     }

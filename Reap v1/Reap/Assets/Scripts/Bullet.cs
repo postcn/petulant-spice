@@ -60,5 +60,10 @@ public class Bullet : MonoBehaviour {
             collision.gameObject.SendMessage("TakeDamage", damage);
             Destroy(this.gameObject);
         }
+        if (tag == "Cocoon")
+        {
+            collision.gameObject.SendMessage("Hatch", damage);
+            Destroy(this.gameObject);
+        }
     }
 }

@@ -14,6 +14,12 @@ public class Movement : MonoBehaviour {
         else {
             UpdatePositionWithJoystick(hero);
         }
+
+        GameObject[] cocoons = GameObject.FindGameObjectsWithTag("Cocoon");
+        for (int i = 0; i < cocoons.Length; i++)
+        {
+            cocoons[i].SendMessage("CheckHatchMovement", Hero_Management.self.gameObject.transform.position);
+        }
     }
 
 	private static void Rotate(Transform hero, Vector3	mousePoint) {
