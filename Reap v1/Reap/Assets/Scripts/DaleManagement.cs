@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class DaleManagement : MonoBehaviour {
-    public const int MIN_TIME_BEFORE_DELAY = 10;
-    public const int MAX_TIME_BEFORE_DELAY = 10;
+    public const int MIN_TIME_BEFORE_DELAY = 60;
+    public const int MAX_TIME_BEFORE_DELAY = 180;
     public const int MIN_TIME_BEFORE_JOKE = 30;
     public const int MAX_TIME_BEFORE_JOKE = 120;
 
