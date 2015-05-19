@@ -62,7 +62,7 @@ public class Hero_Management : Character {
 		else {
 			float mDist = Vector3.Distance(location, mousePlayer.gameObject.transform.position);
 			float cDist = Vector3.Distance(location, controllerPlayer.gameObject.transform.position);
-			if (mDist > cDist) {
+			if (mDist < cDist) {
 				return mousePlayer;
 			}
 			else {
@@ -83,6 +83,7 @@ public class Hero_Management : Character {
 
 	private static void maximizeCamera(Hero_Management alive) {
 		alive.followingCamera.rect = new Rect(0,0,1,1);
+        alive.followingCamera.depth = 0;
 	}
 
 	// Use this for initialization

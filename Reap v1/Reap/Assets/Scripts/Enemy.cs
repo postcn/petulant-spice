@@ -5,8 +5,10 @@ public class Enemy : Character {
     NavMeshAgent nav;               // Reference to the nav mesh agent.
     public int SAMPLE_COUNT = 10;
     public int attack = 5;
+    public const int FRAME_UPDATE_COUNT = 15;
 
     public bool hasScent = true;
+    private int framesToUpdate = 0;
 
 	// Use this for initialization
 	protected override void Start () {
@@ -21,6 +23,14 @@ public class Enemy : Character {
         {
             this.kill(Constants.DEATH_REASONS.Fighting);
             return;
+        }
+
+        if (framesToUpdate > 0) {
+            framesToUpdate--;
+            return;
+        }
+        else {
+            framesToUpdate = FRAME_UPDATE_COUNT;
         }
 
 		Hero_Management player = Hero_Management.closestPlayer(this.transform.position);
