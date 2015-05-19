@@ -14,10 +14,9 @@ public class HKBullet : Bullet {
         if (tag == "Map" || tag == "Structure") {
             Destroy(this.gameObject);
         }
-        if (tag == "Hero") {
-			collision.gameObject.SendMessage("injure",2);
-            Destroy(this.gameObject);
-        }
+		if (collision.gameObject.CompareTag("Hero")) {
+			collision.gameObject.SendMessage("injure",4);
+		}
     }
 
     void SetRotation(float angle) {

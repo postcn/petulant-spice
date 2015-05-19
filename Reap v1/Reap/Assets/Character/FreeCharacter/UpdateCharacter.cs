@@ -28,7 +28,7 @@ public class UpdateCharacter : MonoBehaviour {
 
         Movement.Move(hero, mousePoint, hero.isMousePlayer);
         mousePoint = hero.isMousePlayer ? GetMousePoint() : GetJoystickPoint(); //Update the mouse point in the new, shifted world position
-        GenerateSight.Generate(line, this.transform, mousePoint, maxAngle);
+        GenerateSight.Generate(line, hero, mousePoint, maxAngle);
         Cheat(hero);
     }
     

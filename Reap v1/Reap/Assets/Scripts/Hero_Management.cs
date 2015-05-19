@@ -71,6 +71,20 @@ public class Hero_Management : Character {
 		}
 	}
 
+	public static void maximizeCamera() {
+		Debug.Log("Maximized.");
+		if (mousePlayer == null && controllerPlayer != null) {
+			maximizeCamera(controllerPlayer);
+		} 
+		else if (controllerPlayer == null && mousePlayer != null) {
+			maximizeCamera(mousePlayer);
+		}
+	}
+
+	private static void maximizeCamera(Hero_Management alive) {
+		alive.followingCamera.rect = new Rect(0,0,1,1);
+	}
+
 	// Use this for initialization
 	protected override void Start () {
         if (isMousePlayer) {
@@ -141,7 +155,7 @@ public class Hero_Management : Character {
     }
 
     private void changeLight(int scale) {
-        Light light = Camera.main.GetComponentInChildren<Light>();
+        Light light = followingCamera.GetComponentInChildren<Light>();
         Color newColor = light.color;
         newColor.g -= COLOR_STEP * scale;
         newColor.b -= COLOR_STEP * scale;
@@ -202,6 +216,12 @@ public class Hero_Management : Character {
         if (dying) {
             return;
         }
+		if (this.Equals (mousePlayer)) {
+			mousePlayer = null;
+		}
+		else {
+			controllerPlayer = null;
+		}
         dying = true;
         Debug.Log("Called Kill in Hero.");
         AudioSource[] sources = this.GetComponents<AudioSource>();
