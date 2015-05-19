@@ -29,12 +29,12 @@ public class DropZoneManager : MonoBehaviour {
 	}
 
     void Update() {
-        if (Hero_Management.self != null && Hero_Management.self.getSamplesCollected() > SAMPLES_NEEDED) {
+        if (Hero_Management.getSamplesCollected() > SAMPLES_NEEDED) {
             if (!active) {
                 sendDropShip();
             }
         }
-        if (Hero_Management.self == null) {
+		if (Hero_Management.mousePlayer == null && Hero_Management.controllerPlayer == null) {
             StopCoroutine(Wait());
         }
     }
@@ -51,7 +51,6 @@ public class DropZoneManager : MonoBehaviour {
         int wait = r.Next(MIN_DROP_WAIT, MAX_DROP_WAIT);
         Constants.playRandomAudio(dropShipInbound);
         delayTime = wait;
-        //StartCoroutine(DropShip(zone, wait));
         StartCoroutine(Wait());
     }
 
@@ -63,6 +62,7 @@ public class DropZoneManager : MonoBehaviour {
             if (r.Next(2) == 0 && timesDelayed < MAX_TIMES_DELAYED) {
                 Constants.playRandomAudio(dropShipDelayed);
                 delayTime = r.Next(MIN_DROP_WAIT, MAX_DROP_WAIT);
+				timesDelayed++;
                 StartCoroutine(Wait());
             }
             else {

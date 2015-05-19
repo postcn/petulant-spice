@@ -17,12 +17,25 @@ public class DropZone : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if (activated && Hero_Management.self != null) {
-            float f = distance(drop.transform.position, Hero_Management.self.transform.position);
-            if (f < RADIUS) {
-                DropZoneManager.self.picked_up = true;
-                Hero_Management.self.pickUp();
-            }
+	    if (activated && (Hero_Management.mousePlayer != null || Hero_Management.controllerPlayer != null) ) {
+			if (Hero_Management.mousePlayer != null) {
+				float f = distance(drop.transform.position, Hero_Management.mousePlayer.transform.position);
+				if (f < RADIUS) {
+					if (Hero_Management.controllerPlayer == null) {
+						DropZoneManager.self.picked_up = true;
+					}
+					Hero_Management.mousePlayer.pickUp();
+				}
+			}
+			if (Hero_Management.controllerPlayer != null) {
+				float f = distance(drop.transform.position, Hero_Management.controllerPlayer.transform.position);
+				if (f < RADIUS) {
+					if (Hero_Management.mousePlayer == null) {
+						DropZoneManager.self.picked_up = true;
+					}
+					Hero_Management.controllerPlayer.pickUp();
+				}
+			}
         }
 	}
 

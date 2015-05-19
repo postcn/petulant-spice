@@ -17,18 +17,19 @@ public class HKEnemy : Enemy {
     }
     
     void Shoot() {
-        if (base.player == null) {
+		Hero_Management player = Hero_Management.closestPlayer(this.transform.position);
+        if (player == null) {
             return;
         }
-        float distance = Vector3.Distance(base.player.position, this.transform.position);
+        float distance = Vector3.Distance(player.gameObject.transform.position, this.transform.position);
         
         if (distance < 7)
         {
             GameObject bullet = Instantiate(bulletPrefab);
             bullet.SendMessage("SetOrigin", this.transform);
-            bullet.SendMessage("SetDestination", base.player.position);
+			bullet.SendMessage("SetDestination", player.gameObject.transform.position);
             bullet.SendMessage("SetDamage", 2);
-            bullet.SendMessage("SetRotation", Vector3.Angle(base.player.transform.position, this.transform.position));
+			bullet.SendMessage("SetRotation", Vector3.Angle(player.gameObject.transform.position, this.transform.position));
 
             AudioSource.PlayClipAtPoint(this.weaponFire, this.transform.position);
         }

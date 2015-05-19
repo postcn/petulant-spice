@@ -6,8 +6,8 @@ public class Movement : MonoBehaviour {
     private const float FUDGE_FACTOR = 0.05f;
 	private static float speed = 0.06f;
 	
-    public static void Move(Transform hero, Vector3 mousePoint, bool mousePlayer) {
-        Rotate(hero, mousePoint);
+    public static void Move(Hero_Management hero, Vector3 mousePoint, bool mousePlayer) {
+        Rotate(hero.gameObject.transform, mousePoint);
         if (mousePlayer) {
             UpdatePosition(hero);
         }
@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour {
         GameObject[] cocoons = GameObject.FindGameObjectsWithTag("Cocoon");
         for (int i = 0; i < cocoons.Length; i++)
         {
-            cocoons[i].SendMessage("CheckHatchMovement", Hero_Management.self.gameObject.transform.position);
+            cocoons[i].SendMessage("CheckHatchMovement", hero.gameObject.transform.position);
         }
     }
 
@@ -26,8 +26,8 @@ public class Movement : MonoBehaviour {
 		hero.LookAt(mousePoint);
 	}
 	
-	private static void UpdatePosition(Transform hero) {
-        if (hero.position.y < Constants.MOVEMENT_FLOOR) {
+	private static void UpdatePosition(Hero_Management hero) {
+        if (hero.gameObject.transform.position.y < Constants.MOVEMENT_FLOOR) {
             return;
         }
 		Vector3 delta = Vector3.zero;
@@ -47,30 +47,30 @@ public class Movement : MonoBehaviour {
 		delta.Normalize();
 		delta *= speed;
         //Make the hero slower based upon
-        if (Hero_Management.self != null && Hero_Management.self.getBloodlustCount() > Hero_Management.BREATHING_THRESHOLD) {
-            float lust = (float) Hero_Management.self.getBloodlustCount();
+        if (hero != null && hero.getBloodlustCount() > Hero_Management.BREATHING_THRESHOLD) {
+            float lust = (float) hero.getBloodlustCount();
             delta *= (1.0f -  (lust - Hero_Management.BREATHING_THRESHOLD) / Hero_Management.MAX_BLOODLUST);
         }
 		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl)) {
 			delta *= 2;
 		}
-		hero.position += delta;
+		hero.gameObject.transform.position += delta;
 	}
 
-    private static void UpdatePositionWithJoystick(Transform hero) {
+    private static void UpdatePositionWithJoystick(Hero_Management hero) {
         Vector3 delta = Vector3.zero;
         delta.x = Input.GetAxis("Horizontal");
         delta.z = Input.GetAxis("Vertical");
         //delta.Normalize();
         delta *= speed;
         //Make the hero slower based upon
-        if (Hero_Management.self != null && Hero_Management.self.getBloodlustCount() > Hero_Management.BREATHING_THRESHOLD) {
-            float lust = (float) Hero_Management.self.getBloodlustCount();
+        if (hero != null && hero.getBloodlustCount() > Hero_Management.BREATHING_THRESHOLD) {
+            float lust = (float) hero.getBloodlustCount();
             delta *= (1.0f -  (lust - Hero_Management.BREATHING_THRESHOLD) / Hero_Management.MAX_BLOODLUST);
         }
         if (Input.GetButton("LeftJoyButton")) {
             delta *= 2;
         }
-        hero.position += delta;
+        hero.gameObject.transform.position += delta;
     }
 }

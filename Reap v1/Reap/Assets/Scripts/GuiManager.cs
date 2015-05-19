@@ -25,18 +25,18 @@ public class GuiManager : MonoBehaviour {
         }
             
         ReturnButton.gameObject.SetActive(false);
-        if (Hero_Management.self != null && heroStatus != null) {
-            heroStatus.text = string.Format(format, Hero_Management.self.getHealth(), Hero_Management.self.getSamplesCollected(), Hero_Management.self.getCurrentAmmunition());
+        if (Hero_Management.mousePlayer != null && heroStatus != null) {
+			heroStatus.text = string.Format(format, Hero_Management.mousePlayer.getHealth(), Hero_Management.getSamplesCollected(), Hero_Management.mousePlayer.getCurrentAmmunition());
         }
 
-        if (Hero_Management.self == null && !DropZoneManager.self.picked_up) {
+		if (Hero_Management.mousePlayer == null && !DropZoneManager.self.picked_up) {
             largeNotification.text = GAME_OVER;
             ReturnButton.gameObject.SetActive(true);
             if (!played) {
                 AudioSource.PlayClipAtPoint(gameOver, Camera.main.transform.position);
                 played = true;
             }
-        } else if (Hero_Management.self == null && DropZoneManager.self.picked_up) {
+		} else if (Hero_Management.mousePlayer == null && DropZoneManager.self.picked_up) {
             largeNotification.text = VICTORY;
             largeNotification.color = Color.green;
             ReturnButton.gameObject.SetActive(true);
@@ -46,9 +46,9 @@ public class GuiManager : MonoBehaviour {
             }
         }
 
-        if (Hero_Management.self != null && DropZoneManager.self.delayTime > 0) {
+		if (Hero_Management.mousePlayer != null && DropZoneManager.self.delayTime > 0) {
             smallNotification.text = string.Format(DROP_SHIP, Constants.formatSecondsToMinute(DropZoneManager.self.delayTime));
-        } else if (Hero_Management.self != null && DaleManagement.self.delayTime > 0) {
+		} else if (Hero_Management.mousePlayer != null && DaleManagement.self.delayTime > 0) {
             smallNotification.text = string.Format(DALE_AVAILABLE, Constants.formatSecondsToMinute(DaleManagement.self.delayTime));
         } else {
             smallNotification.text = EMPTY;

@@ -35,7 +35,7 @@ public class EnemyManager : MonoBehaviour
         }
 
 		// If the player has no health left..
-        if (Hero_Management.self == null) {
+        if (Hero_Management.mousePlayer == null && Hero_Management.controllerPlayer == null) {
             //Hero is dead.
             return;
         }

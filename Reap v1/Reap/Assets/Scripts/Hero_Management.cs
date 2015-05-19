@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class Hero_Management : Character {
-    public static Hero_Management self;
+    public static Hero_Management mousePlayer;
+	public static Hero_Management controllerPlayer;
 
     public const int HERO_DEATH_DELAY = 1;
     public const int HEARTBEAT_THRESHOLD = 25;
@@ -17,39 +18,66 @@ public class Hero_Management : Character {
     public AudioClip[] injurySounds;
     public AudioSource emptyMagazinePlayer;
     public AudioClip weaponFire;
-
+	public bool isMousePlayer;
+	public Camera followingCamera;
 
     private const float VOLUME_STEP = 2.0f/MAX_BLOODLUST;
     private const float LIGHT_STEP = 5.0f/MAX_BLOODLUST;
     private const float LIGHT_RANGE_STEP = 40.0f/MAX_BLOODLUST;
     private const float COLOR_STEP = 1.0f/MAX_BLOODLUST;
 
-    private int samplesCollected = 0;
+    private static int samplesCollected = 0;
     private int bloodlustCount = 0;
     private bool dying = false;
     private int decreasedDelay = 2;
     private int ammo;
     public Constants.WEAPONS weapon {get; set;}
 
-    public int getSamplesCollected() {
+    public static int getSamplesCollected() {
         return samplesCollected;
     }
 
-    public void addSamples(int sampleAmount) {
-        this.samplesCollected += sampleAmount;
+    public static void addSamples(int sampleAmount) {
+        samplesCollected += sampleAmount;
     }
 
-    public void removeSamples(int decreaseAmount) {
-        this.samplesCollected -= decreaseAmount;
+    public static void removeSamples(int decreaseAmount) {
+        samplesCollected -= decreaseAmount;
     }
 
     public int getBloodlustCount() {
         return bloodlustCount;
     }
 
+	public static Hero_Management closestPlayer(Vector3 location) {
+		if (mousePlayer == null && controllerPlayer == null) {
+			return null;
+		}
+		else if (mousePlayer ==null) {
+			return controllerPlayer;
+		}
+		else if (controllerPlayer == null) {
+			return mousePlayer;
+		}
+		else {
+			float mDist = Vector3.Distance(location, mousePlayer.gameObject.transform.position);
+			float cDist = Vector3.Distance(location, controllerPlayer.gameObject.transform.position);
+			if (mDist > cDist) {
+				return mousePlayer;
+			}
+			else {
+				return controllerPlayer;
+			}
+		}
+	}
+
 	// Use this for initialization
 	protected override void Start () {
-        self = this;
+        if (isMousePlayer) {
+			mousePlayer = this;
+		} else {
+			controllerPlayer = this;
+		}
         StartCoroutine(Bloodlust());
         this.health = MAX_HERO_HEALTH;
         this.weapon = Constants.WEAPONS.Pistol;

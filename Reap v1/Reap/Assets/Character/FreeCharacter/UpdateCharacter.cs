@@ -6,7 +6,7 @@ public class UpdateCharacter : MonoBehaviour {
     LineRenderer line;
     public GameObject bullet;
     bool managementLoaded = false;
-    public bool mousePlayer;
+	public Hero_Management hero;
     float lastAngle = 90f;
 
     void Start() {
@@ -17,23 +17,23 @@ public class UpdateCharacter : MonoBehaviour {
     }
     
     void Update() {
-        Vector3 mousePoint = mousePlayer ? GetMousePoint() : GetJoystickPoint();
-        float maxAngle = MaxAngle();
+        Vector3 mousePoint = hero.isMousePlayer ? GetMousePoint() : GetJoystickPoint();
+        float maxAngle = MaxAngle(hero);
 
         //Don't fire until we've loaded hero management. Otherwise we don't know what we're shooting.
-        managementLoaded = (Hero_Management.self != null);
+        managementLoaded = (hero != null);
         if (managementLoaded) {
-            Fire.DoFire(this.transform, mousePoint, maxAngle, bullet, mousePlayer);  
+            Fire.DoFire(hero, mousePoint, maxAngle, bullet, hero.isMousePlayer);  
         }
 
-        Movement.Move(this.transform, mousePoint, mousePlayer);
-        mousePoint = mousePlayer ? GetMousePoint() : GetJoystickPoint(); //Update the mouse point in the new, shifted world position
+        Movement.Move(hero, mousePoint, hero.isMousePlayer);
+        mousePoint = hero.isMousePlayer ? GetMousePoint() : GetJoystickPoint(); //Update the mouse point in the new, shifted world position
         GenerateSight.Generate(line, this.transform, mousePoint, maxAngle);
-        Cheat();
+        Cheat(hero);
     }
     
     Vector3 GetMousePoint() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Ray ray = hero.followingCamera.ScreenPointToRay(Input.mousePosition);
         Plane characterPlane = new Plane (this.transform.up, this.transform.position);
         float distance = 0; 
         if (characterPlane.Raycast(ray, out distance)) { //This should always occur, because the plane runs parallel through the character
@@ -59,15 +59,15 @@ public class UpdateCharacter : MonoBehaviour {
 
         Vector3 joystickPoint = this.transform.position;
         joystickPoint.x += 4f;
-        Vector3 heading = joystickPoint - Camera.main.transform.position;
+		Vector3 heading = joystickPoint - hero.followingCamera.transform.position;
         Vector3 rayDirection = heading / heading.magnitude;
-        Ray joystickRay = new Ray(Camera.main.transform.position, rayDirection);
+        Ray joystickRay = new Ray(hero.followingCamera.transform.position, rayDirection);
         Plane characterPlane = new Plane(this.transform.up, this.transform.position);
         
         float distance;
         Vector3 r;
-        Vector3 direction = Quaternion.AngleAxis(angle, Camera.main.transform.forward) * joystickRay.direction;
-        Ray negative = new Ray(Camera.main.transform.position, direction);
+		Vector3 direction = Quaternion.AngleAxis(angle, hero.followingCamera.transform.forward) * joystickRay.direction;
+		Ray negative = new Ray(hero.followingCamera.transform.position, direction);
         
         if (characterPlane.Raycast(negative, out distance))
         {
@@ -79,32 +79,32 @@ public class UpdateCharacter : MonoBehaviour {
         return this.transform.position;
     }
 
-    float MaxAngle() {
-        int count = Hero_Management.self.getBloodlustCount();
+    float MaxAngle(Hero_Management hero) {
+        int count = hero.getBloodlustCount();
         return (0.0084f * count * count + 0.0564f * count - 0.1818f);
     }
 
-    void Cheat() {
-        if (mousePlayer) {
+    void Cheat(Hero_Management hero) {
+        if (hero.isMousePlayer) {
             if (Input.GetKey(KeyCode.Alpha1)) {
-                Hero_Management.self.weapon = Constants.WEAPONS.Pistol;
+                hero.weapon = Constants.WEAPONS.Pistol;
             }
             else if (Input.GetKey(KeyCode.Alpha2)) {
-                Hero_Management.self.weapon = Constants.WEAPONS.Rifle;
+                hero.weapon = Constants.WEAPONS.Rifle;
             }
             else if (Input.GetKey(KeyCode.Alpha3)) {
-                Hero_Management.self.weapon = Constants.WEAPONS.MachineGun;
+                hero.weapon = Constants.WEAPONS.MachineGun;
             }
         }
         else {
             if (Input.GetButton("JoystickX")) {
-                Hero_Management.self.weapon = Constants.WEAPONS.Pistol;
+                hero.weapon = Constants.WEAPONS.Pistol;
             }
             else if (Input.GetButton("JoystickY")) {
-                Hero_Management.self.weapon = Constants.WEAPONS.Rifle;
+                hero.weapon = Constants.WEAPONS.Rifle;
             }
             else if (Input.GetButton("JoystickB")) {
-                Hero_Management.self.weapon = Constants.WEAPONS.MachineGun;
+                hero.weapon = Constants.WEAPONS.MachineGun;
             }
         }
     }

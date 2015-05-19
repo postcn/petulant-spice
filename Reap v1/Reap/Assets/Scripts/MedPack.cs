@@ -26,16 +26,16 @@ public class MedPack : MonoBehaviour {
         if (collision.gameObject.tag == Constants.HERO_TAG) {
             healing = true;
             heal_audio.Play();
+			collision.gameObject.SendMessage("heal",MEDPACK_AMOUNT);
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (healing && !heal_audio.isPlaying) {
-            Hero_Management.self.heal(MEDPACK_AMOUNT);
+			GameObject o = Instantiate(replacementObject);
+			o.transform.position = thisMedpack.gameObject.transform.position;
             Destroy(thisMedpack);
-            GameObject o = Instantiate(replacementObject);
-            o.transform.position = Hero_Management.self.transform.position;
         }
 
         halo.intensity += step;

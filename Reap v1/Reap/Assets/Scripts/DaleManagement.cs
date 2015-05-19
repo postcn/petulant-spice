@@ -39,21 +39,19 @@ public class DaleManagement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if (Fired() || DropZoneManager.self.picked_up) {
+	    if (fired || DropZoneManager.self.picked_up) {
             StopCoroutine(delay);
             StopCoroutine(joke);
         }
 	}
 
-    private bool Fired() {
-        if (Hero_Management.self == null && !DropZoneManager.self.picked_up){
-            if (!fired) {
-                fired = true;
-                Constants.playRandomAudio(firedClips);
-            }
-            return true;
+    public void Fired() {
+        if ((Hero_Management.mousePlayer == null || Hero_Management.controllerPlayer == null) && !DropZoneManager.self.picked_up){
+			Constants.playRandomAudio(firedClips);
+			if (Hero_Management.mousePlayer == null && Hero_Management.controllerPlayer == null) {
+				fired = true;
+			}
         }
-        return false;
     }
 
     IEnumerator Delay() {

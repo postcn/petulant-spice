@@ -36,15 +36,17 @@ public class Character : MonoBehaviour {
         Debug.Log("Should be killed");
 
         if (this is Hero_Management) {
-            Debug.Log("Hero ded. Game Over.");
-            //TODO: Implement Game over.
+            DaleManagement.self.Fired();
         }
-        //TODO: Monster -> heal the hero's bloodlust by amount.
-        else if (this is Enemy) {
-            //TODO: Enemies have different amounts?
-            if (Hero_Management.self != null) {
-                Hero_Management.self.decrementBloodlust();
-                Hero_Management.self.addSamples(this.getSampleCount());
+        if (this is Enemy) {
+            if (Hero_Management.mousePlayer != null || Hero_Management.controllerPlayer != null) {
+                if (Hero_Management.mousePlayer != null) {
+                    Hero_Management.mousePlayer.decrementBloodlust();
+                }
+                if (Hero_Management.controllerPlayer != null) {
+                    Hero_Management.controllerPlayer.decrementBloodlust();
+                }
+                Hero_Management.addSamples(this.getSampleCount());
             }
 
         }

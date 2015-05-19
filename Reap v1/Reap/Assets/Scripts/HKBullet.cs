@@ -15,7 +15,7 @@ public class HKBullet : Bullet {
             Destroy(this.gameObject);
         }
         if (tag == "Hero") {
-            Hero_Management.self.injure(2);
+			collision.gameObject.SendMessage("injure",2);
             Destroy(this.gameObject);
         }
     }

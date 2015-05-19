@@ -63,8 +63,9 @@ public class AmmoMedRequestListener : MonoBehaviour {
 			StartCoroutine(Wait());
 		}
 
-        if ((Input.GetKey(spawnHuff)) && canBuyHuff()) {
-            spawnHuffCan();
+		//TODO: Swap out to correct button.
+        if ((Input.GetKey(spawnHuff) || Input.GetButton("RightShoulder")) && canBuyHuff()) {
+			spawnHuffCan(Input.GetKey(spawnHuff));
             StartCoroutine(Wait());
         }
 	}
@@ -90,8 +91,8 @@ public class AmmoMedRequestListener : MonoBehaviour {
 	}
 
     private Boolean canBuyMed() {
-        if (Hero_Management.self != null) {
-            bool val = Hero_Management.self.getSamplesCollected() >= MEDPACK_COST;
+        if (Hero_Management.mousePlayer != null || Hero_Management.controllerPlayer != null) {
+            bool val = Hero_Management.getSamplesCollected() >= MEDPACK_COST;
             if (!val) {
                 StartCoroutine(PlayRandomAudio(moneyDenials));
             }
@@ -102,8 +103,8 @@ public class AmmoMedRequestListener : MonoBehaviour {
     }
 
     private Boolean canBuyAmmo() {
-        if (Hero_Management.self != null) {
-            bool val = Hero_Management.self.getSamplesCollected() >= AMMO_COST;
+		if (Hero_Management.mousePlayer != null || Hero_Management.controllerPlayer != null) {
+            bool val = Hero_Management.getSamplesCollected() >= AMMO_COST;
             if (!val) {
                 StartCoroutine(PlayRandomAudio(moneyDenials));
             }
@@ -114,8 +115,8 @@ public class AmmoMedRequestListener : MonoBehaviour {
     }
 
     private Boolean canBuyHuff() {
-        if (Hero_Management.self != null) {
-            bool val = Hero_Management.self.getSamplesCollected() >= HUFF_COST;
+		if (Hero_Management.mousePlayer != null || Hero_Management.controllerPlayer != null) {
+            bool val = Hero_Management.getSamplesCollected() >= HUFF_COST;
             if (!val) {
                 StartCoroutine(PlayRandomAudio(moneyDenials));
             }
@@ -129,7 +130,7 @@ public class AmmoMedRequestListener : MonoBehaviour {
 		System.Random rnd = new System.Random();
 		int r = rnd.Next(scripts.Count);
 		scripts[r].spawnMed();
-        Hero_Management.self.removeSamples(MEDPACK_COST);
+        Hero_Management.removeSamples(MEDPACK_COST);
         StartCoroutine(PlayRandomAudio(medSuccess));
 	}
 
@@ -137,26 +138,26 @@ public class AmmoMedRequestListener : MonoBehaviour {
 		System.Random rnd = new System.Random();
 		int r = rnd.Next(scripts.Count);
 		scripts[r].spawnAmmo();
-        Hero_Management.self.removeSamples(AMMO_COST);
+        Hero_Management.removeSamples(AMMO_COST);
         StartCoroutine(PlayRandomAudio(ammoSuccess));
 	}
 
-    private void spawnHuffCan() {
+    private void spawnHuffCan(bool mousePlayer) {
         AmmoMedSpawnerScript closest = scripts[0];
-        float closestDist = distanceToHero(closest.startingLocation);
+        float closestDist = distanceToHero(closest.startingLocation, mousePlayer ? Hero_Management.mousePlayer : Hero_Management.controllerPlayer);
         foreach (AmmoMedSpawnerScript script in scripts) {
-            float dist = distanceToHero(script.startingLocation);
+			float dist = distanceToHero(script.startingLocation, mousePlayer ? Hero_Management.mousePlayer : Hero_Management.controllerPlayer);
             if (dist < closestDist) {
                 closestDist = dist;
                 closest = script;
             }
         }
         closest.spawnHuff();
-        Hero_Management.self.removeSamples(HUFF_COST);
+        Hero_Management.removeSamples(HUFF_COST);
         StartCoroutine(PlayRandomAudio(huffSuccess));
     }
 
-    private float distanceToHero(Transform position) {
-        return Mathf.Abs(Vector3.Distance(position.position, Hero_Management.self.gameObject.transform.position));
+    private float distanceToHero(Transform position, Hero_Management triggeringHero) {
+        return Mathf.Abs(Vector3.Distance(position.position, triggeringHero.gameObject.transform.position));
     }
 }

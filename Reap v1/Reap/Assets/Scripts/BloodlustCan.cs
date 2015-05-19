@@ -24,16 +24,16 @@ public class BloodlustCan : MonoBehaviour {
         if (collision.gameObject.tag == Constants.HERO_TAG) {
             resupplying = true;
             resupply_audio.Play();
+			collision.gameObject.SendMessage("clearBloodlust");
         }
     }
     
     // Update is called once per frame
     void Update () {
         if (resupplying && !resupply_audio.isPlaying) {
-            Hero_Management.self.clearBloodlust();
+			GameObject o = Instantiate(replacementObject);
+			o.transform.position = thisCan.transform.position;
             Destroy(thisCan);
-            GameObject o = Instantiate(replacementObject);
-            o.transform.position = Hero_Management.self.transform.position;
         }
         halo.intensity += step;
         if (halo.intensity <= 0 || halo.intensity >= 1) {

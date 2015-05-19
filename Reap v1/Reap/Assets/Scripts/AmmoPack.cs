@@ -12,6 +12,7 @@ public class AmmoPack : MonoBehaviour {
     private AudioSource resupply_audio;
     private Light halo;
     private float step = -0.01f;
+
     
     // Use this for initialization
     void Start () {
@@ -26,16 +27,17 @@ public class AmmoPack : MonoBehaviour {
         if (collision.gameObject.tag == Constants.HERO_TAG) {
             resupplying = true;
             resupply_audio.Play();
+			collision.gameObject.SendMessage("resupply", AMMO_AMOUNT);
         }
     }
     
     // Update is called once per frame
     void Update () {
         if (resupplying && !resupply_audio.isPlaying) {
-            Hero_Management.self.resupply(AMMO_AMOUNT);
+			GameObject o = Instantiate(replacementObject);
+			o.transform.position = thisAmmopack.transform.position;
             Destroy(thisAmmopack);
-            GameObject o = Instantiate(replacementObject);
-            o.transform.position = Hero_Management.self.transform.position;
+            
         }
         halo.intensity += step;
         if (halo.intensity <= 0 || halo.intensity >= 1) {
