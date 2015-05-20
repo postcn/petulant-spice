@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Fire : MonoBehaviour {
-
-    private static int framesToFire = 0;
     public GameObject bulletPrefab;
 
     public static void DoFire(Hero_Management hero, Vector3 mousePoint, float maxAngle, GameObject bulletPrefab, bool mousePlayer) {
-        if (framesToFire != 0) {
-            framesToFire--;
+        if (hero.framesToFire != 0) {
+            hero.framesToFire--;
             return;
         }
-        if (!((mousePlayer && Input.GetMouseButton(0)) || (!mousePlayer && Input.GetAxis("Trigger") <= -.3f))) {
+        if (mousePlayer && !Input.GetMouseButton(0)) {
+            return;
+        }
+        if (!mousePlayer && !(Input.GetAxis("Trigger") <= -.3f)) {
             return;
         }
         if (!hero.fireWeapon(1)) {
@@ -50,7 +51,7 @@ public class Fire : MonoBehaviour {
         }
 
         //Reset fire rate
-        SetWeaponFireRate(hero.weapon);
+        SetWeaponFireRate(hero, hero.weapon);
     }
 
     private static float GetDamage(Hero_Management hero) {
@@ -70,19 +71,19 @@ public class Fire : MonoBehaviour {
         return 0.9947f * Mathf.Exp(.011f * hero.getBloodlustCount());
     }
 
-    public static void SetWeaponFireRate(Constants.WEAPONS weapon) {
+    public static void SetWeaponFireRate(Hero_Management hero, Constants.WEAPONS weapon) {
         switch (weapon) {
             case Constants.WEAPONS.Pistol:
-                Fire.framesToFire = 25;
+                hero.framesToFire = 25;
                 break;
             case Constants.WEAPONS.Rifle:
-                Fire.framesToFire = 45;
+                hero.framesToFire = 45;
                 break;
             case Constants.WEAPONS.MachineGun:
-                Fire.framesToFire = 10;
+                hero.framesToFire = 10;
                 break;
             default:
-                Fire.framesToFire = 60;
+                hero.framesToFire = 60;
                 break;
         }
     }

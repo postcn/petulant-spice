@@ -31,6 +31,7 @@ public class Hero_Management : Character {
     private bool dying = false;
     private int decreasedDelay = 2;
     private int ammo;
+    public int framesToFire = 0;
     public Constants.WEAPONS weapon {get; set;}
 
     public static int getSamplesCollected() {

@@ -45,26 +45,26 @@ public class AmmoMedRequestListener : MonoBehaviour {
             return;
         }
 
-        if (isWaiting && (Input.GetKey(spawnMed) || Input.GetKey(spawnAmmo) || Input.GetButton("LeftShoulder") || Input.GetButton("RightShoulder"))) {
+        if (isWaiting && (Input.GetKey(spawnMed) || Input.GetKey(spawnAmmo) || Input.GetKey(spawnHuff) ||
+                          Input.GetAxis("DHorizontal") >= .3f || Input.GetAxis("DVertical") >= .3f || Input.GetAxis("DHorizontal") <= -.3f)) {
             StartCoroutine(PlayRandomAudio(timeDenials));
             return;
 		} else if (isWaiting) {
             return;
         }
 
-		if ((Input.GetKey(spawnMed) || Input.GetButton("LeftShoulder")) && canBuyMed()) {
+		if ((Input.GetKey(spawnMed) || Input.GetAxis("DHorizontal") >= .3f) && canBuyMed()) {
 			spawnMedPack();
 			StartCoroutine(Wait());
 
 		}
 		
-        if ((Input.GetKey(spawnAmmo) || Input.GetButton("RightShoulder")) && canBuyAmmo()) {
+        if ((Input.GetKey(spawnAmmo) || Input.GetAxis("DVertical") >= .3f) && canBuyAmmo()) {
 			spawnAmmoPack();
 			StartCoroutine(Wait());
 		}
 
-		//TODO: Swap out to correct button.
-        if ((Input.GetKey(spawnHuff) || Input.GetButton("RightShoulder")) && canBuyHuff()) {
+        if ((Input.GetKey(spawnHuff) || Input.GetAxis("DHorizontal") <= -.3f) && canBuyHuff()) {
 			spawnHuffCan(Input.GetKey(spawnHuff));
             StartCoroutine(Wait());
         }
