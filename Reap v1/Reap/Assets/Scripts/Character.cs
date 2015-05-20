@@ -33,23 +33,10 @@ public class Character : MonoBehaviour {
 	}
 
     protected virtual void kill(Constants.DEATH_REASONS reason) {
-        Debug.Log("Should be killed");
        
         if (this.GetType().Equals(typeof(Hero_Management))) {
             DaleManagement.self.Fired();
             Hero_Management.maximizeCamera();
-        }
-        if (this is Enemy) {
-            if (Hero_Management.mousePlayer != null || Hero_Management.controllerPlayer != null) {
-                if (Hero_Management.mousePlayer != null) {
-                    Hero_Management.mousePlayer.decrementBloodlust();
-                }
-                if (Hero_Management.controllerPlayer != null) {
-                    Hero_Management.controllerPlayer.decrementBloodlust();
-                }
-                Hero_Management.addSamples(this.getSampleCount());
-            }
-
         }
         if(reason == Constants.DEATH_REASONS.Fire) {
             Instantiate(fireDeathReplacement);

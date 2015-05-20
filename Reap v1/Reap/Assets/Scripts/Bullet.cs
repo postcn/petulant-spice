@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour {
     private bool init = false;
     private int framesToLive = 90;
     private int damage;
+    private Hero_Management owner;
 
     protected Vector3 origin;
     protected Vector3 destination;
@@ -15,6 +16,10 @@ public class Bullet : MonoBehaviour {
 	void Start () {
         this.gameObject.tag = "Bullet";
 	}
+
+    void SetOwner(Hero_Management hero) {
+        this.owner = hero;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -58,6 +63,7 @@ public class Bullet : MonoBehaviour {
         }
         if (tag == "Enemy") {
             collision.gameObject.SendMessage("TakeDamage", damage);
+            collision.gameObject.SendMessage("LastHero", owner);
             Destroy(this.gameObject);
         }
         if (tag == "Cocoon")

@@ -11,7 +11,7 @@ public class Hero_Management : Character {
     public const int BREATHING_THRESHOLD = 75;
     public const int MAX_BLOODLUST = 100;
     public const int MIN_BLOODLUST = 0;
-    public const int KILL_DECREASE = 1;
+    public const int KILL_DECREASE = 2;
     public const int MAX_HERO_HEALTH = 100;
     public const int MAX_START_AMMO = 300;
 
@@ -29,7 +29,7 @@ public class Hero_Management : Character {
     private static int samplesCollected = 0;
     private int bloodlustCount = 0;
     private bool dying = false;
-    private int decreasedDelay = 2;
+    private int decreasedDelay = 1;
     private int ammo;
     public int framesToFire = 0;
     public Constants.WEAPONS weapon {get; set;}

@@ -39,6 +39,7 @@ public class Fire : MonoBehaviour {
 
         //Instantiate game object
         GameObject bullet = Instantiate(bulletPrefab);
+        bullet.SendMessage("SetOwner", hero);
         bullet.SendMessage("SetOrigin", hero.gameObject.transform);
         bullet.SendMessage("SetDestination", destination);
         bullet.SendMessage("SetDamage", GetDamage(hero));
