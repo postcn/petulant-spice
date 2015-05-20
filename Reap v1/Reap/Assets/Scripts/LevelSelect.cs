@@ -22,6 +22,11 @@ public class LevelSelect : MonoBehaviour {
     }
 
     public void GoToHome(){
+        Hero_Management.removeSamples(Hero_Management.getSamplesCollected());
         Application.LoadLevel ("TitleScreen");
+    }
+
+    public void Quit() {
+        Application.Quit();
     }
 }
